@@ -34,7 +34,13 @@ export default function Home() {
   }, [isHydrated, session]);
 
   const handleInteract = () => {
-    nextPairRef.current = fetchNextPair(mockEntities, visitorId, session.roundComparisons + 1);
+    const promise = fetchNextPair(mockEntities, visitorId, session.roundComparisons + 1);
+    nextPairRef.current = promise;
+    promise.then((pair) => {
+      if (!pair) return;
+      new window.Image().src = pair.left.image_url;
+      new window.Image().src = pair.right.image_url;
+    });
   };
 
   const handleChoice = async (winnerId: string) => {

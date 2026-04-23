@@ -1,8 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(ls /c/Users/Rufus/Documents/PythonProjects/awareometer/public/images/entities/*.svg)",
-      "Bash(node scripts/generate-entity-illustrations.mjs)"
-    ]
-  }
-}

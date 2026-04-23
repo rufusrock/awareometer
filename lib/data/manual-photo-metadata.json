@@ -1,0 +1,146 @@
+[
+  {
+    "slug": "you",
+    "localImagePath": "/images/entities-photo/you-awake.jpg",
+    "sourcePageUrl": "https://unsplash.com/photos/a-person-standing-in-a-field-oyUeUE4K4pI",
+    "directFileUrl": "https://unsplash.com/photos/oyUeUE4K4pI/download?force=true&w=1600",
+    "license": "Unsplash License",
+    "attribution": "Photo by Kateryna Hliznitsova via Unsplash",
+    "usageTerms": "Free to use under the Unsplash License"
+  },
+  {
+    "slug": "you-asleep",
+    "localImagePath": "/images/entities-photo/you-asleep.jpg",
+    "sourcePageUrl": "https://unsplash.com/photos/a-person-sleeping-on-a-bed-ACoLUrYADVw",
+    "directFileUrl": "https://unsplash.com/photos/ACoLUrYADVw/download?force=true&w=1600",
+    "license": "Unsplash License",
+    "attribution": "Photo by Ryan Ancill via Unsplash",
+    "usageTerms": "Free to use under the Unsplash License"
+  },
+  {
+    "slug": "you-dreaming",
+    "localImagePath": "/images/entities-photo/you-dreaming.jpg",
+    "sourcePageUrl": "https://unsplash.com/photos/a-person-sleeping-on-a-bed-my9N5t5_OUg",
+    "directFileUrl": "https://unsplash.com/photos/my9N5t5_OUg/download?force=true&w=1600",
+    "license": "Unsplash License",
+    "attribution": "Photo by MSCC via Unsplash",
+    "usageTerms": "Free to use under the Unsplash License"
+  },
+  {
+    "slug": "you-very-drunk",
+    "localImagePath": "/images/entities-photo/you-intoxicated.jpg",
+    "sourcePageUrl": "https://unsplash.com/photos/a-close-up-of-a-person-drinking-from-a-can-hE8hzoUqr8w",
+    "directFileUrl": "https://unsplash.com/photos/hE8hzoUqr8w/download?force=true&w=1600",
+    "license": "Unsplash License",
+    "attribution": "Photo by Joseph Sharp via Unsplash",
+    "usageTerms": "Free to use under the Unsplash License"
+  },
+  {
+    "slug": "you-under-anesthesia",
+    "localImagePath": "/images/entities-photo/you-under-anesthesia.jpg",
+    "sourcePageUrl": "https://unsplash.com/photos/a-surgeon-performing-surgery-on-a-patient-in-an-operating-room-z5P_4ZRjrwU",
+    "directFileUrl": "https://unsplash.com/photos/z5P_4ZRjrwU/download?force=true&w=1600",
+    "license": "Unsplash License",
+    "attribution": "Photo by Jonathan Borba via Unsplash",
+    "usageTerms": "Free to use under the Unsplash License"
+  },
+  {
+    "slug": "black-hole",
+    "localImagePath": "/images/entities-photo/black-hole.jpg",
+    "sourcePageUrl": null,
+    "directFileUrl": null,
+    "license": "Attribution pending documentation",
+    "attribution": "Attribution pending documentation",
+    "usageTerms": "Attribution pending documentation"
+  },
+  {
+    "slug": "blue-whale",
+    "localImagePath": "/images/entities-photo/blue-whale.jpg",
+    "sourcePageUrl": null,
+    "directFileUrl": null,
+    "license": "Attribution pending documentation",
+    "attribution": "Attribution pending documentation",
+    "usageTerms": "Attribution pending documentation"
+  },
+  {
+    "slug": "dog",
+    "localImagePath": "/images/entities-photo/dog.jpg",
+    "sourcePageUrl": null,
+    "directFileUrl": null,
+    "license": "Attribution pending documentation",
+    "attribution": "Attribution pending documentation",
+    "usageTerms": "Attribution pending documentation"
+  },
+  {
+    "slug": "dolphin",
+    "localImagePath": "/images/entities-photo/dolphin.jpg",
+    "sourcePageUrl": null,
+    "directFileUrl": null,
+    "license": "Attribution pending documentation",
+    "attribution": "Attribution pending documentation",
+    "usageTerms": "Attribution pending documentation"
+  },
+  {
+    "slug": "ecosystem",
+    "localImagePath": "/images/entities-photo/ecosystem.jpg",
+    "sourcePageUrl": null,
+    "directFileUrl": null,
+    "license": "Attribution pending documentation",
+    "attribution": "Attribution pending documentation",
+    "usageTerms": "Attribution pending documentation"
+  },
+  {
+    "slug": "elephant",
+    "localImagePath": "/images/entities-photo/elephant.jpg",
+    "sourcePageUrl": null,
+    "directFileUrl": null,
+    "license": "Attribution pending documentation",
+    "attribution": "Attribution pending documentation",
+    "usageTerms": "Attribution pending documentation"
+  },
+  {
+    "slug": "marie-curie",
+    "localImagePath": "/images/entities-photo/marie-curie.jpg",
+    "sourcePageUrl": null,
+    "directFileUrl": null,
+    "license": "Attribution pending documentation",
+    "attribution": "Attribution pending documentation",
+    "usageTerms": "Attribution pending documentation"
+  },
+  {
+    "slug": "meditating-monk",
+    "localImagePath": "/images/entities-photo/meditating-monk.webp",
+    "sourcePageUrl": null,
+    "directFileUrl": null,
+    "license": "Attribution pending documentation",
+    "attribution": "Attribution pending documentation",
+    "usageTerms": "Attribution pending documentation"
+  },
+  {
+    "slug": "picasso",
+    "localImagePath": "/images/entities-photo/picasso.jpg",
+    "sourcePageUrl": null,
+    "directFileUrl": null,
+    "license": "Attribution pending documentation",
+    "attribution": "Attribution pending documentation",
+    "usageTerms": "Attribution pending documentation"
+  },
+  {
+    "slug": "salmon",
+    "localImagePath": "/images/entities-photo/salmon.webp",
+    "sourcePageUrl": null,
+    "directFileUrl": null,
+    "license": "Attribution pending documentation",
+    "attribution": "Attribution pending documentation",
+    "usageTerms": "Attribution pending documentation"
+  },
+  {
+    "slug": "self-driving-car",
+    "localImagePath": "/images/entities-photo/self-driving-car.jpg",
+    "sourcePageUrl": null,
+    "directFileUrl": null,
+    "license": "Attribution pending documentation",
+    "attribution": "Attribution pending documentation",
+    "usageTerms": "Attribution pending documentation"
+  }
+]

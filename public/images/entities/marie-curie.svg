@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-labelledby="marie-curie-title">
+  <title id="marie-curie-title">marie-curie</title>
+  <defs>
+    <linearGradient id="marie-curie-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff7ed" />
+      <stop offset="100%" stop-color="#fef3c7" />
+    </linearGradient>
+    <linearGradient id="marie-curie-floor" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fde68a" />
+      <stop offset="100%" stop-color="#ffffff" />
+    </linearGradient>
+    <radialGradient id="marie-curie-sun" cx="50%" cy="22%" r="58%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </radialGradient>
+    <filter id="marie-curie-shadow" x="-20%" y="-20%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#0f172a" flood-opacity="0.14" />
+    </filter>
+    <filter id="marie-curie-soft" x="-20%" y="-20%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#ffffff" flood-opacity="0.2" />
+    </filter>
+  </defs>
+  <rect width="1200" height="900" rx="48" fill="url(#marie-curie-bg)" />
+  <rect width="1200" height="900" rx="48" fill="url(#marie-curie-sun)" opacity="0.72" />
+  <circle cx="150" cy="132" r="94" fill="#ffffff" opacity="0.22" />
+  <circle cx="1042" cy="126" r="126" fill="#ffffff" opacity="0.18" />
+  <path d="M0 650 C132 614 258 604 390 618 C498 630 578 654 678 654 C796 654 886 616 1012 612 C1090 610 1148 624 1200 650 V900 H0 Z" fill="#ffffff" opacity="0.12" />
+  <path d="M0 742 C180 700 358 684 540 706 S908 756 1200 736 V900 H0 Z" fill="url(#marie-curie-floor)" opacity="0.98" />
+  <path d="M0 748 C220 724 362 710 546 722 C742 734 920 746 1200 732" stroke="#ffffff" stroke-opacity="0.34" stroke-width="10" fill="none" />
+  <ellipse cx="600" cy="740" rx="320" ry="54" fill="#0f172a" opacity="0.08" />
+  <g filter="url(#marie-curie-shadow)">
+  <circle cx="600" cy="304" r="78" fill="#f2c9a5" />
+  <path d="M530 272 C524 220 540 192 580 186 C600 174 636 178 660 192 C688 204 694 232 682 268" fill="#0f172a" />
+  <path d="M530 272 C520 300 522 330 536 350" stroke="#0f172a" stroke-width="10" fill="none" />
+  <path d="M682 268 C692 296 690 326 676 346" stroke="#0f172a" stroke-width="10" fill="none" />
+  <circle cx="572" cy="300" r="7" fill="#0f172a" />
+  <circle cx="628" cy="300" r="7" fill="#0f172a" />
+  <path d="M582 338 C592 350 608 350 618 338" stroke="#0f172a" stroke-width="4" fill="none" stroke-linecap="round" />
+  <path d="M510 390 C510 374 548 360 600 360 C652 360 690 374 690 390 L690 580 C690 606 648 630 600 630 C552 630 510 606 510 580 Z" fill="#1e3a5f" />
+  <rect x="530" y="400" width="140" height="24" rx="12" fill="#ffffff" opacity="0.2" />
+  <path d="M510 420 L432 560" stroke="#f2c9a5" stroke-width="20" stroke-linecap="round" />
+  <path d="M690 420 L768 560" stroke="#f2c9a5" stroke-width="20" stroke-linecap="round" />
+  <path d="M560 628 L544 738" stroke="#0f172a" stroke-width="20" stroke-linecap="round" />
+  <path d="M640 628 L656 738" stroke="#0f172a" stroke-width="20" stroke-linecap="round" />
+  <rect x="752" y="480" width="80" height="110" rx="10" fill="#ffffff" stroke="#b45309" stroke-width="6" />
+  <rect x="772" y="500" width="12" height="60" rx="6" fill="#22d3ee" opacity="0.6" />
+  <rect x="792" y="520" width="12" height="40" rx="6" fill="#a78bfa" opacity="0.5" />
+  <circle cx="782" cy="558" r="6" fill="#22c55e" opacity="0.7" />
+  </g>
+</svg>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-labelledby="thermostat-title">
+  <title id="thermostat-title">thermostat</title>
+  <defs>
+    <linearGradient id="thermostat-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#eff6ff" />
+      <stop offset="100%" stop-color="#e0e7ff" />
+    </linearGradient>
+    <linearGradient id="thermostat-floor" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#c7d2fe" />
+      <stop offset="100%" stop-color="#ffffff" />
+    </linearGradient>
+    <radialGradient id="thermostat-sun" cx="50%" cy="22%" r="58%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </radialGradient>
+    <filter id="thermostat-shadow" x="-20%" y="-20%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#0f172a" flood-opacity="0.14" />
+    </filter>
+    <filter id="thermostat-soft" x="-20%" y="-20%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#ffffff" flood-opacity="0.2" />
+    </filter>
+  </defs>
+  <rect width="1200" height="900" rx="48" fill="url(#thermostat-bg)" />
+  <rect width="1200" height="900" rx="48" fill="url(#thermostat-sun)" opacity="0.72" />
+  <circle cx="150" cy="132" r="94" fill="#ffffff" opacity="0.22" />
+  <circle cx="1042" cy="126" r="126" fill="#ffffff" opacity="0.18" />
+  <path d="M0 650 C132 614 258 604 390 618 C498 630 578 654 678 654 C796 654 886 616 1012 612 C1090 610 1148 624 1200 650 V900 H0 Z" fill="#ffffff" opacity="0.12" />
+  <path d="M0 742 C180 700 358 684 540 706 S908 756 1200 736 V900 H0 Z" fill="url(#thermostat-floor)" opacity="0.98" />
+  <path d="M0 748 C220 724 362 710 546 722 C742 734 920 746 1200 732" stroke="#ffffff" stroke-opacity="0.34" stroke-width="10" fill="none" />
+  <ellipse cx="600" cy="740" rx="320" ry="54" fill="#0f172a" opacity="0.08" />
+  <g filter="url(#thermostat-shadow)">
+  <rect x="458" y="236" width="284" height="408" rx="44" fill="#ffffff" stroke="#172554" stroke-width="14" />
+  <circle cx="600" cy="440" r="120" fill="#ffffff" stroke="#4f46e5" stroke-width="10" />
+  <circle cx="600" cy="440" r="96" fill="#4f46e5" opacity="0.08" />
+  <text x="556" y="460" font-family="Arial, Helvetica, sans-serif" font-size="64" font-weight="700" fill="#4f46e5">72</text>
+  <text x="644" y="432" font-family="Arial, Helvetica, sans-serif" font-size="24" fill="#4f46e5" opacity="0.6">°</text>
+  <rect x="560" y="286" width="80" height="28" rx="14" fill="#4f46e5" opacity="0.18" />
+  <circle cx="600" cy="580" r="8" fill="#4f46e5" opacity="0.4" />
+  </g>
+</svg>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-labelledby="robot-vacuum-title">
+  <title id="robot-vacuum-title">robot-vacuum</title>
+  <defs>
+    <linearGradient id="robot-vacuum-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#eff6ff" />
+      <stop offset="100%" stop-color="#e0e7ff" />
+    </linearGradient>
+    <linearGradient id="robot-vacuum-floor" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#c7d2fe" />
+      <stop offset="100%" stop-color="#ffffff" />
+    </linearGradient>
+    <radialGradient id="robot-vacuum-sun" cx="50%" cy="22%" r="58%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </radialGradient>
+    <filter id="robot-vacuum-shadow" x="-20%" y="-20%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#0f172a" flood-opacity="0.14" />
+    </filter>
+    <filter id="robot-vacuum-soft" x="-20%" y="-20%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#ffffff" flood-opacity="0.2" />
+    </filter>
+  </defs>
+  <rect width="1200" height="900" rx="48" fill="url(#robot-vacuum-bg)" />
+  <rect width="1200" height="900" rx="48" fill="url(#robot-vacuum-sun)" opacity="0.72" />
+  <circle cx="150" cy="132" r="94" fill="#ffffff" opacity="0.22" />
+  <circle cx="1042" cy="126" r="126" fill="#ffffff" opacity="0.18" />
+  <path d="M0 650 C132 614 258 604 390 618 C498 630 578 654 678 654 C796 654 886 616 1012 612 C1090 610 1148 624 1200 650 V900 H0 Z" fill="#ffffff" opacity="0.12" />
+  <path d="M0 742 C180 700 358 684 540 706 S908 756 1200 736 V900 H0 Z" fill="url(#robot-vacuum-floor)" opacity="0.98" />
+  <path d="M0 748 C220 724 362 710 546 722 C742 734 920 746 1200 732" stroke="#ffffff" stroke-opacity="0.34" stroke-width="10" fill="none" />
+  <ellipse cx="600" cy="740" rx="320" ry="54" fill="#0f172a" opacity="0.08" />
+  <g filter="url(#robot-vacuum-shadow)">
+  <rect x="292" y="640" width="620" height="30" rx="15" fill="#94a3b8" opacity="0.35" />
+  <circle cx="600" cy="494" r="196" fill="#e2e8f0" stroke="#172554" stroke-width="18" />
+  <circle cx="600" cy="494" r="116" fill="#ffffff" />
+  <circle cx="600" cy="494" r="26" fill="#4f46e5" />
+  <path d="M420 614 C486 674 714 674 780 614" stroke="#94a3b8" stroke-width="18" stroke-linecap="round" fill="none" />
+  </g>
+</svg>

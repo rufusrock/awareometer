@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-labelledby="beehive-title">
+  <title id="beehive-title">beehive</title>
+  <defs>
+    <linearGradient id="beehive-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc" />
+      <stop offset="100%" stop-color="#e2e8f0" />
+    </linearGradient>
+    <linearGradient id="beehive-floor" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#cbd5e1" />
+      <stop offset="100%" stop-color="#ffffff" />
+    </linearGradient>
+    <radialGradient id="beehive-sun" cx="50%" cy="22%" r="58%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </radialGradient>
+    <filter id="beehive-shadow" x="-20%" y="-20%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#0f172a" flood-opacity="0.14" />
+    </filter>
+    <filter id="beehive-soft" x="-20%" y="-20%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#ffffff" flood-opacity="0.2" />
+    </filter>
+  </defs>
+  <rect width="1200" height="900" rx="48" fill="url(#beehive-bg)" />
+  <rect width="1200" height="900" rx="48" fill="url(#beehive-sun)" opacity="0.72" />
+  <circle cx="150" cy="132" r="94" fill="#ffffff" opacity="0.22" />
+  <circle cx="1042" cy="126" r="126" fill="#ffffff" opacity="0.18" />
+  <path d="M0 650 C132 614 258 604 390 618 C498 630 578 654 678 654 C796 654 886 616 1012 612 C1090 610 1148 624 1200 650 V900 H0 Z" fill="#ffffff" opacity="0.12" />
+  <path d="M0 742 C180 700 358 684 540 706 S908 756 1200 736 V900 H0 Z" fill="url(#beehive-floor)" opacity="0.98" />
+  <path d="M0 748 C220 724 362 710 546 722 C742 734 920 746 1200 732" stroke="#ffffff" stroke-opacity="0.34" stroke-width="10" fill="none" />
+  <ellipse cx="600" cy="740" rx="320" ry="54" fill="#0f172a" opacity="0.08" />
+  <g filter="url(#beehive-shadow)">
+  <path d="M480 220 L720 220" stroke="#7c2d12" stroke-width="16" stroke-linecap="round" />
+  <path d="M600 220 L600 280" stroke="#7c2d12" stroke-width="12" />
+  <path d="M480 320 C480 280 540 260 600 260 C660 260 720 280 720 320 L720 540 C720 600 660 640 600 640 C540 640 480 600 480 540 Z" fill="#f59e0b" />
+  <path d="M500 360 H700" stroke="#d97706" stroke-width="8" opacity="0.5" />
+  <path d="M500 420 H700" stroke="#d97706" stroke-width="8" opacity="0.5" />
+  <path d="M500 480 H700" stroke="#d97706" stroke-width="8" opacity="0.5" />
+  <path d="M500 540 H700" stroke="#d97706" stroke-width="8" opacity="0.5" />
+  <circle cx="600" cy="620" r="18" fill="#92400e" />
+  <ellipse cx="400" cy="360" rx="32" ry="22" fill="#facc15" />
+  <ellipse cx="370" cy="346" rx="22" ry="14" fill="#ffffff" opacity="0.6" transform="rotate(-20 370 346)" />
+  <ellipse cx="430" cy="346" rx="22" ry="14" fill="#ffffff" opacity="0.6" transform="rotate(20 430 346)" />
+  <ellipse cx="780" cy="440" rx="28" ry="20" fill="#facc15" />
+  <ellipse cx="756" cy="428" rx="20" ry="12" fill="#ffffff" opacity="0.6" transform="rotate(-15 756 428)" />
+  <ellipse cx="804" cy="428" rx="20" ry="12" fill="#ffffff" opacity="0.6" transform="rotate(15 804 428)" />
+  </g>
+</svg>

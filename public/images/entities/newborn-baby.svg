@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-labelledby="newborn-baby-title">
+  <title id="newborn-baby-title">newborn-baby</title>
+  <defs>
+    <linearGradient id="newborn-baby-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#eff6ff" />
+      <stop offset="100%" stop-color="#dbeafe" />
+    </linearGradient>
+    <linearGradient id="newborn-baby-floor" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#dbeafe" />
+      <stop offset="100%" stop-color="#ffffff" />
+    </linearGradient>
+    <radialGradient id="newborn-baby-sun" cx="50%" cy="22%" r="58%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </radialGradient>
+    <filter id="newborn-baby-shadow" x="-20%" y="-20%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#0f172a" flood-opacity="0.14" />
+    </filter>
+    <filter id="newborn-baby-soft" x="-20%" y="-20%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#ffffff" flood-opacity="0.2" />
+    </filter>
+  </defs>
+  <rect width="1200" height="900" rx="48" fill="url(#newborn-baby-bg)" />
+  <rect width="1200" height="900" rx="48" fill="url(#newborn-baby-sun)" opacity="0.72" />
+  <circle cx="150" cy="132" r="94" fill="#ffffff" opacity="0.22" />
+  <circle cx="1042" cy="126" r="126" fill="#ffffff" opacity="0.18" />
+  <path d="M0 650 C132 614 258 604 390 618 C498 630 578 654 678 654 C796 654 886 616 1012 612 C1090 610 1148 624 1200 650 V900 H0 Z" fill="#ffffff" opacity="0.12" />
+  <path d="M0 742 C180 700 358 684 540 706 S908 756 1200 736 V900 H0 Z" fill="url(#newborn-baby-floor)" opacity="0.98" />
+  <path d="M0 748 C220 724 362 710 546 722 C742 734 920 746 1200 732" stroke="#ffffff" stroke-opacity="0.34" stroke-width="10" fill="none" />
+  <ellipse cx="600" cy="740" rx="320" ry="54" fill="#0f172a" opacity="0.08" />
+  <g filter="url(#newborn-baby-shadow)">
+  <path d="M420 610 C420 480 500 374 600 374 C700 374 780 480 780 610 C720 686 660 726 600 726 C540 726 480 686 420 610 Z" fill="#2563eb" opacity="0.2" />
+  <path d="M452 596 C452 500 514 426 600 426 C686 426 748 500 748 596 C700 650 648 686 600 686 C552 686 500 650 452 596 Z" fill="#ffffff" stroke="#2563eb" stroke-width="10" />
+  <circle cx="600" cy="420" r="66" fill="#f2c9a5" />
+  <path d="M548 398 C562 354 638 354 652 398" stroke="#c08457" stroke-width="10" stroke-linecap="round" fill="none" />
+  <path d="M470 572 C520 628 564 654 600 654 C636 654 680 628 730 572" stroke="#2563eb" stroke-width="20" stroke-linecap="round" fill="none" />
+  </g>
+</svg>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-labelledby="smartphone-title">
+  <title id="smartphone-title">smartphone</title>
+  <defs>
+    <linearGradient id="smartphone-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#eff6ff" />
+      <stop offset="100%" stop-color="#e0e7ff" />
+    </linearGradient>
+    <linearGradient id="smartphone-floor" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#c7d2fe" />
+      <stop offset="100%" stop-color="#ffffff" />
+    </linearGradient>
+    <radialGradient id="smartphone-sun" cx="50%" cy="22%" r="58%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </radialGradient>
+    <filter id="smartphone-shadow" x="-20%" y="-20%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#0f172a" flood-opacity="0.14" />
+    </filter>
+    <filter id="smartphone-soft" x="-20%" y="-20%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#ffffff" flood-opacity="0.2" />
+    </filter>
+  </defs>
+  <rect width="1200" height="900" rx="48" fill="url(#smartphone-bg)" />
+  <rect width="1200" height="900" rx="48" fill="url(#smartphone-sun)" opacity="0.72" />
+  <circle cx="150" cy="132" r="94" fill="#ffffff" opacity="0.22" />
+  <circle cx="1042" cy="126" r="126" fill="#ffffff" opacity="0.18" />
+  <path d="M0 650 C132 614 258 604 390 618 C498 630 578 654 678 654 C796 654 886 616 1012 612 C1090 610 1148 624 1200 650 V900 H0 Z" fill="#ffffff" opacity="0.12" />
+  <path d="M0 742 C180 700 358 684 540 706 S908 756 1200 736 V900 H0 Z" fill="url(#smartphone-floor)" opacity="0.98" />
+  <path d="M0 748 C220 724 362 710 546 722 C742 734 920 746 1200 732" stroke="#ffffff" stroke-opacity="0.34" stroke-width="10" fill="none" />
+  <ellipse cx="600" cy="740" rx="320" ry="54" fill="#0f172a" opacity="0.08" />
+  <g filter="url(#smartphone-shadow)">
+  <rect x="440" y="196" width="320" height="556" rx="36" fill="#172554" />
+  <rect x="460" y="236" width="280" height="472" rx="8" fill="#ffffff" />
+  <circle cx="600" cy="216" r="6" fill="#475569" />
+  <rect x="560" y="720" width="80" height="8" rx="4" fill="#475569" />
+  <rect x="490" y="270" width="56" height="56" rx="12" fill="#3b82f6" opacity="0.8" />
+  <rect x="570" y="270" width="56" height="56" rx="12" fill="#22c55e" opacity="0.8" />
+  <rect x="650" y="270" width="56" height="56" rx="12" fill="#f97316" opacity="0.8" />
+  <rect x="490" y="350" width="56" height="56" rx="12" fill="#ef4444" opacity="0.8" />
+  <rect x="570" y="350" width="56" height="56" rx="12" fill="#8b5cf6" opacity="0.8" />
+  <rect x="650" y="350" width="56" height="56" rx="12" fill="#06b6d4" opacity="0.8" />
+  <rect x="490" y="430" width="56" height="56" rx="12" fill="#ec4899" opacity="0.8" />
+  <rect x="570" y="430" width="56" height="56" rx="12" fill="#f59e0b" opacity="0.8" />
+  <rect x="650" y="430" width="56" height="56" rx="12" fill="#64748b" opacity="0.8" />
+  <rect x="480" y="530" width="240" height="40" rx="12" fill="#e2e8f0" />
+  <rect x="480" y="590" width="160" height="28" rx="8" fill="#e2e8f0" opacity="0.6" />
+  </g>
+</svg>

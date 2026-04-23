@@ -1,0 +1,224 @@
+[
+  {
+    "slug": "you",
+    "provider": "wikimedia-commons",
+    "strategy": "search-needed",
+    "search_query": "generic person standing portrait free license",
+    "local_target": "public/images/entities-photo/you.jpg",
+    "notes": "Still needs a cohesive human-state photo set."
+  },
+  {
+    "slug": "you-asleep",
+    "provider": "wikimedia-commons",
+    "strategy": "search-needed",
+    "search_query": "person sleeping in bed free license",
+    "local_target": "public/images/entities-photo/you-asleep.jpg"
+  },
+  {
+    "slug": "you-dreaming",
+    "provider": "wikimedia-commons",
+    "strategy": "search-needed",
+    "search_query": "sleeping person dreamlike image free license",
+    "local_target": "public/images/entities-photo/you-dreaming.jpg"
+  },
+  {
+    "slug": "you-very-drunk",
+    "provider": "wikimedia-commons",
+    "strategy": "search-needed",
+    "search_query": "tipsy person nightlife free license non-graphic",
+    "local_target": "public/images/entities-photo/you-very-drunk.jpg"
+  },
+  {
+    "slug": "you-under-anesthesia",
+    "provider": "wikimedia-commons",
+    "strategy": "search-needed",
+    "search_query": "patient anesthesia operating room free license non-graphic",
+    "local_target": "public/images/entities-photo/you-under-anesthesia.jpg"
+  },
+  {
+    "slug": "newborn-baby",
+    "provider": "wikimedia-commons",
+    "strategy": "direct-file",
+    "commons_file_title": "File:Newborn-baby.jpg",
+    "search_query": "newborn baby free license photo",
+    "local_target": "public/images/entities-photo/newborn-baby.jpg"
+  },
+  {
+    "slug": "chimpanzee",
+    "provider": "wikimedia-commons",
+    "strategy": "direct-file",
+    "commons_file_title": "File:Chimpanzee Portrait.jpg",
+    "search_query": "chimpanzee portrait wikimedia commons",
+    "local_target": "public/images/entities-photo/chimpanzee.jpg"
+  },
+  {
+    "slug": "crow",
+    "provider": "wikimedia-commons",
+    "strategy": "direct-file",
+    "commons_file_title": "File:Crow Bird.jpg",
+    "search_query": "crow bird side profile wikimedia commons",
+    "local_target": "public/images/entities-photo/crow.jpg"
+  },
+  {
+    "slug": "octopus",
+    "provider": "wikimedia-commons",
+    "strategy": "direct-file",
+    "commons_file_title": "File:Octopus (28836592458).jpg",
+    "search_query": "octopus underwater wikimedia commons",
+    "local_target": "public/images/entities-photo/octopus.jpg"
+  },
+  {
+    "slug": "jellyfish",
+    "provider": "wikimedia-commons",
+    "strategy": "direct-file",
+    "commons_file_title": "File:Moon Jellyfish (48204094152).jpg",
+    "search_query": "jellyfish underwater wikimedia commons",
+    "local_target": "public/images/entities-photo/jellyfish.jpg"
+  },
+  {
+    "slug": "bee",
+    "provider": "wikimedia-commons",
+    "strategy": "direct-file",
+    "commons_file_title": "File:Bee on a Flower.jpg",
+    "search_query": "bee on flower wikimedia commons",
+    "local_target": "public/images/entities-photo/bee.jpg"
+  },
+  {
+    "slug": "ant-colony",
+    "provider": "wikimedia-commons",
+    "strategy": "direct-file",
+    "commons_file_title": "File:Ant Colony.JPG",
+    "search_query": "ant colony ants nest wikimedia commons",
+    "local_target": "public/images/entities-photo/ant-colony.jpg"
+  },
+  {
+    "slug": "oak-tree",
+    "provider": "wikimedia-commons",
+    "strategy": "direct-file",
+    "commons_file_title": "File:Oak tree .jpg",
+    "search_query": "oak tree isolated wikimedia commons",
+    "local_target": "public/images/entities-photo/oak-tree.jpg"
+  },
+  {
+    "slug": "venus-flytrap",
+    "provider": "wikimedia-commons",
+    "strategy": "direct-file",
+    "commons_file_title": "File:Venus flytrap (53886303376).jpg",
+    "search_query": "venus flytrap wikimedia commons",
+    "local_target": "public/images/entities-photo/venus-flytrap.jpg"
+  },
+  {
+    "slug": "carrot",
+    "provider": "wikimedia-commons",
+    "strategy": "direct-file",
+    "commons_file_title": "File:Carrot vegetable on white background.jpg",
+    "search_query": "carrot root vegetable wikimedia commons",
+    "local_target": "public/images/entities-photo/carrot.jpg"
+  },
+  {
+    "slug": "mushroom",
+    "provider": "wikimedia-commons",
+    "strategy": "direct-file",
+    "commons_file_title": "File:2020-mushroom.jpg",
+    "search_query": "mushroom forest floor wikimedia commons",
+    "local_target": "public/images/entities-photo/mushroom.jpg"
+  },
+  {
+    "slug": "slime-mold",
+    "provider": "wikimedia-commons",
+    "strategy": "direct-file",
+    "commons_file_title": "File:Slime mold (8924057445).jpg",
+    "search_query": "slime mold wikimedia commons",
+    "local_target": "public/images/entities-photo/slime-mold.jpg"
+  },
+  {
+    "slug": "bacterium",
+    "provider": "wikimedia-commons",
+    "strategy": "direct-file",
+    "commons_file_title": "File:Escherichia coli electron microscopy.jpg",
+    "search_query": "bacterium microscopy wikimedia commons",
+    "local_target": "public/images/entities-photo/bacterium.jpg",
+    "notes": "Representative SEM image of E. coli from Wikimedia Commons."
+  },
+  {
+    "slug": "chatgpt",
+    "provider": "wikimedia-commons",
+    "strategy": "search-needed",
+    "search_query": "abstract AI chat interface free license illustration",
+    "local_target": "public/images/entities-photo/chatgpt.jpg",
+    "notes": "Needs a restrained AI interface visual, not a conversation screenshot."
+  },
+  {
+    "slug": "humanoid-robot",
+    "provider": "wikimedia-commons",
+    "strategy": "direct-file",
+    "commons_file_title": "File:Humanoid Robot.webp",
+    "search_query": "humanoid robot free license photo",
+    "local_target": "public/images/entities-photo/humanoid-robot.webp"
+  },
+  {
+    "slug": "corporation",
+    "provider": "wikimedia-commons",
+    "strategy": "direct-file",
+    "commons_file_title": "File:Office Building.JPG",
+    "search_query": "office headquarters building free license",
+    "local_target": "public/images/entities-photo/corporation.jpg"
+  },
+  {
+    "slug": "city",
+    "provider": "wikimedia-commons",
+    "strategy": "direct-file",
+    "commons_file_title": "File:City skyline (175372397).jpg",
+    "search_query": "city skyline free license photo",
+    "local_target": "public/images/entities-photo/city.jpg"
+  },
+  {
+    "slug": "internet",
+    "provider": "wikimedia-commons",
+    "strategy": "direct-file",
+    "commons_file_title": "File:Computer server rack.jpg",
+    "search_query": "server racks network cables free license",
+    "local_target": "public/images/entities-photo/internet.jpg",
+    "notes": "Using data-center hardware as a clearer representative image."
+  },
+  {
+    "slug": "coral-polyp",
+    "provider": "wikimedia-commons",
+    "strategy": "direct-file",
+    "commons_file_title": "File:Coral Polyps.jpg",
+    "search_query": "coral polyp macro wikimedia commons",
+    "local_target": "public/images/entities-photo/coral-polyp.jpg"
+  },
+  {
+    "slug": "coral-reef",
+    "provider": "wikimedia-commons",
+    "strategy": "direct-file",
+    "commons_file_title": "File:Coral Reef (6022423870).jpg",
+    "search_query": "coral reef underwater free license",
+    "local_target": "public/images/entities-photo/coral-reef.jpg"
+  },
+  {
+    "slug": "earth",
+    "provider": "wikimedia-commons",
+    "strategy": "direct-file",
+    "commons_file_title": "File:The Blue Marble.jpg",
+    "search_query": "Blue Marble earth",
+    "local_target": "public/images/entities-photo/earth.jpg"
+  },
+  {
+    "slug": "universe",
+    "provider": "wikimedia-commons",
+    "strategy": "direct-file",
+    "commons_file_title": "File:Hubble ultra deep field.jpg",
+    "search_query": "Hubble Ultra Deep Field",
+    "local_target": "public/images/entities-photo/universe.jpg"
+  },
+  {
+    "slug": "rock",
+    "provider": "wikimedia-commons",
+    "strategy": "direct-file",
+    "commons_file_title": "File:Rock stone.jpg",
+    "search_query": "single rock on white background free license",
+    "local_target": "public/images/entities-photo/rock.jpg"
+  }
+]

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-labelledby="salmon-title">
+  <title id="salmon-title">salmon</title>
+  <defs>
+    <linearGradient id="salmon-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ecfeff" />
+      <stop offset="100%" stop-color="#dcfce7" />
+    </linearGradient>
+    <linearGradient id="salmon-floor" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#d1fae5" />
+      <stop offset="100%" stop-color="#ffffff" />
+    </linearGradient>
+    <radialGradient id="salmon-sun" cx="50%" cy="22%" r="58%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </radialGradient>
+    <filter id="salmon-shadow" x="-20%" y="-20%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#0f172a" flood-opacity="0.14" />
+    </filter>
+    <filter id="salmon-soft" x="-20%" y="-20%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#ffffff" flood-opacity="0.2" />
+    </filter>
+  </defs>
+  <rect width="1200" height="900" rx="48" fill="url(#salmon-bg)" />
+  <rect width="1200" height="900" rx="48" fill="url(#salmon-sun)" opacity="0.72" />
+  <circle cx="150" cy="132" r="94" fill="#ffffff" opacity="0.22" />
+  <circle cx="1042" cy="126" r="126" fill="#ffffff" opacity="0.18" />
+  <path d="M0 650 C132 614 258 604 390 618 C498 630 578 654 678 654 C796 654 886 616 1012 612 C1090 610 1148 624 1200 650 V900 H0 Z" fill="#ffffff" opacity="0.12" />
+  <path d="M0 742 C180 700 358 684 540 706 S908 756 1200 736 V900 H0 Z" fill="url(#salmon-floor)" opacity="0.98" />
+  <path d="M0 748 C220 724 362 710 546 722 C742 734 920 746 1200 732" stroke="#ffffff" stroke-opacity="0.34" stroke-width="10" fill="none" />
+  <ellipse cx="600" cy="740" rx="320" ry="54" fill="#0f172a" opacity="0.08" />
+  <g filter="url(#salmon-shadow)">
+  <path d="M280 470 C360 390 500 360 640 380 C780 400 880 460 920 500 C880 540 780 580 640 570 C500 560 360 530 280 470 Z" fill="#f87171" />
+  <path d="M320 470 C380 410 500 380 620 390 C740 400 840 450 880 490" fill="#fca5a5" opacity="0.4" />
+  <circle cx="380" cy="450" r="10" fill="#ffffff" />
+  <circle cx="380" cy="452" r="5" fill="#052e16" />
+  <path d="M910 490 C950 460 980 470 990 500" stroke="#f87171" stroke-width="14" stroke-linecap="round" fill="none" />
+  <path d="M910 490 C950 520 980 510 990 480" stroke="#f87171" stroke-width="14" stroke-linecap="round" fill="none" />
+  <circle cx="500" cy="430" r="4" fill="#0f172a" opacity="0.12" />
+  <circle cx="560" cy="440" r="4" fill="#0f172a" opacity="0.12" />
+  <circle cx="620" cy="430" r="4" fill="#0f172a" opacity="0.12" />
+  <circle cx="680" cy="440" r="4" fill="#0f172a" opacity="0.12" />
+  </g>
+</svg>

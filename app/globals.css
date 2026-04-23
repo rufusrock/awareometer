@@ -1,0 +1,117 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  --bg: #f8fafc;
+  --bg-accent: #eef2ff;
+  --surface: rgba(255, 255, 255, 0.84);
+  --surface-strong: #ffffff;
+  --text: #0f172a;
+  --muted: #475569;
+  --border: rgba(148, 163, 184, 0.22);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top, rgba(191, 219, 254, 0.45), transparent 34%),
+    radial-gradient(circle at bottom right, rgba(226, 232, 240, 0.9), transparent 30%),
+    linear-gradient(180deg, var(--bg-accent) 0%, var(--bg) 22%, #ffffff 100%);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+.glass-panel {
+  background: var(--surface);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+}
+
+.selection-pop {
+  animation: pop-in 180ms ease-out;
+}
+
+@keyframes pop-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.percentage-reveal {
+  animation: percentage-in 400ms ease-out;
+}
+
+@keyframes percentage-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(8px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.insight-card {
+  animation: insight-in 500ms ease-out both;
+}
+
+.insight-card:nth-child(1) { animation-delay: 0ms; }
+.insight-card:nth-child(2) { animation-delay: 120ms; }
+.insight-card:nth-child(3) { animation-delay: 240ms; }
+.insight-card:nth-child(4) { animation-delay: 360ms; }
+.insight-card:nth-child(5) { animation-delay: 480ms; }
+.insight-card:nth-child(6) { animation-delay: 600ms; }
+
+@keyframes insight-in {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-enter {
+  animation: modal-in 250ms ease-out;
+}
+
+@keyframes modal-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.95) translateY(8px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}

@@ -199,8 +199,8 @@ export function CompletionDialog({ responses, entities, onKeepMatching }: Props)
           {showAiInsight && (
             <StatCard emoji="🤖" title="Your view on AI">
               {aiGap! > 0
-                ? <>You gave AI more credit than most — you picked ChatGPT as more aware in <strong>{Math.round(userAiWinRate! * 100)}%</strong> of its matchups, vs. the crowd average of <strong>{Math.round(globalAiWinRate! * 100)}%</strong>.</>
-                : <>You're more sceptical about AI than most — you picked ChatGPT as more aware in only <strong>{Math.round(userAiWinRate! * 100)}%</strong> of its matchups, vs. the crowd average of <strong>{Math.round(globalAiWinRate! * 100)}%</strong>.</>
+                ? <>You think AI is more aware than most people do — you picked ChatGPT as more aware in <strong>{Math.round(userAiWinRate! * 100)}%</strong> of its matchups, vs. the crowd average of <strong>{Math.round(globalAiWinRate! * 100)}%</strong>.</>
+                : <>You think AI is less aware than most people do — you picked ChatGPT as more aware in only <strong>{Math.round(userAiWinRate! * 100)}%</strong> of its matchups, vs. the crowd average of <strong>{Math.round(globalAiWinRate! * 100)}%</strong>.</>
               }
             </StatCard>
           )}

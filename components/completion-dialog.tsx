@@ -90,47 +90,32 @@ function computeStats(responses: ResponseRecord[], entities: Entity[]) {
   }
   violations = Math.round(violations / 3);
 
-  // --- Category bias ---
-  // For each non-skip response, tally appearances and wins per category
-  const catAppearances = new Map<EntityCategory, number>();
-  const catWins = new Map<EntityCategory, number>();
+  // --- Surprising category tendencies ---
+  // Only count cross-category matchups where the user picked the lower-expected-rank
+  // category over the higher-expected-rank category. Avoids confounding from matchup luck
+  // (e.g. animals only facing rocks inflating the animal win rate).
+  const surprisingWins = new Map<EntityCategory, number>();
 
   for (const r of nonSkips) {
     if (!r.selectedId) continue;
     const loserId = r.selectedId === r.leftId ? r.rightId : r.leftId;
     const winner = entityById.get(r.selectedId);
     const loser = entityById.get(loserId);
-    if (!winner || !loser) continue;
+    if (!winner || !loser || winner.category === loser.category) continue;
 
-    catAppearances.set(winner.category, (catAppearances.get(winner.category) ?? 0) + 1);
-    catAppearances.set(loser.category, (catAppearances.get(loser.category) ?? 0) + 1);
-    catWins.set(winner.category, (catWins.get(winner.category) ?? 0) + 1);
+    if (EXPECTED_RANK[winner.category] < EXPECTED_RANK[loser.category]) {
+      surprisingWins.set(winner.category, (surprisingWins.get(winner.category) ?? 0) + 1);
+    }
   }
 
-  let biasedFor: { category: EntityCategory; winRate: number } | null = null;
-  let biasedAgainst: { category: EntityCategory; winRate: number } | null = null;
-
-  for (const [cat, appearances] of catAppearances) {
-    if (appearances < 3) continue;
-    const w = catWins.get(cat) ?? 0;
-    const winRate = w / appearances;
-    if (!biasedFor || winRate > biasedFor.winRate) biasedFor = { category: cat, winRate };
-    if (!biasedAgainst || winRate < biasedAgainst.winRate) biasedAgainst = { category: cat, winRate };
+  let surprisingCategory: { category: EntityCategory; count: number } | null = null;
+  for (const [cat, count] of surprisingWins) {
+    if (!surprisingCategory || count > surprisingCategory.count) {
+      surprisingCategory = { category: cat, count };
+    }
   }
 
-  // Only surface if the result is surprising:
-  // biasedFor (high win rate) should have a LOWER expected rank than biasedAgainst (low win rate).
-  // If the "obvious" higher-ranked category wins most, that's not interesting.
-  if (
-    biasedFor &&
-    biasedAgainst &&
-    EXPECTED_RANK[biasedFor.category] >= EXPECTED_RANK[biasedAgainst.category]
-  ) {
-    biasedFor = null;
-    biasedAgainst = null;
-  }
-
-  return { mostControversial, slowest, maxMs, violations, exampleCycle, biasedFor, biasedAgainst, entityById };
+  return { mostControversial, slowest, maxMs, violations, exampleCycle, surprisingCategory, entityById };
 }
 
 export function CompletionDialog({ responses, entities, onKeepMatching }: Props) {
@@ -160,7 +145,7 @@ export function CompletionDialog({ responses, entities, onKeepMatching }: Props)
     return () => { cancelled = true; };
   }, []);
 
-  const { mostControversial, slowest, maxMs, violations, exampleCycle, biasedFor, biasedAgainst, entityById } = computeStats(responses, entities);
+  const { mostControversial, slowest, maxMs, violations, exampleCycle, surprisingCategory, entityById } = computeStats(responses, entities);
 
   // Elo-controlled AI insight: for each ChatGPT matchup the user judged, check
   // whether their choice went against or with the crowd (as reflected by Elo).
@@ -265,12 +250,12 @@ export function CompletionDialog({ responses, entities, onKeepMatching }: Props)
                 })()}
           </StatCard>
 
-          {biasedFor && biasedAgainst && biasedFor.category !== biasedAgainst.category && (
+          {surprisingCategory && (
             <StatCard emoji="📊" title="Your tendencies">
-              When <strong>{CATEGORY_LABELS[biasedFor.category]}</strong> appeared in a pair you
-              picked them {Math.round(biasedFor.winRate * 100)}% of the time — yet{" "}
-              <strong>{CATEGORY_LABELS[biasedAgainst.category]}</strong> only won{" "}
-              {Math.round(biasedAgainst.winRate * 100)}% of the time. That's a surprising gap.
+              You rated <strong>{CATEGORY_LABELS[surprisingCategory.category]}</strong> as more
+              aware even when facing entities the crowd rates higher —{" "}
+              {surprisingCategory.count === 1 ? "once" : <><strong>{surprisingCategory.count}</strong> times</>}.
+              That's a surprising tendency.
             </StatCard>
           )}
 

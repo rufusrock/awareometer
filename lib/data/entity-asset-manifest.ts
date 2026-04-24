@@ -50,7 +50,8 @@ const labels: Record<string, string> = {
   "rock": "A Rock",
   "picasso": "Picasso",
   "marie-curie": "Marie Curie",
-  "einstein": "Einstein"
+  "einstein": "Einstein",
+  "frida-kahlo": "Frida Kahlo"
 };
 
 export const entityAssetManifest: EntityAssetRecord[] = Object.entries(labels).map(([slug, label]) => {

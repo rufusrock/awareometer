@@ -91,10 +91,9 @@ function computeStats(responses: ResponseRecord[], entities: Entity[]) {
   violations = Math.round(violations / 3);
 
   // --- Surprising category tendencies ---
-  // Only count cross-category matchups where the user picked the lower-expected-rank
-  // category over the higher-expected-rank category. Avoids confounding from matchup luck
-  // (e.g. animals only facing rocks inflating the animal win rate).
-  const surprisingWins = new Map<EntityCategory, number>();
+  // Track cross-category pairs where user picked the lower-expected-rank category
+  // over the higher-expected-rank one. Key = "winnerCat__loserCat".
+  const surprisingPairs = new Map<string, { winner: EntityCategory; loser: EntityCategory; count: number }>();
 
   for (const r of nonSkips) {
     if (!r.selectedId) continue;
@@ -104,14 +103,16 @@ function computeStats(responses: ResponseRecord[], entities: Entity[]) {
     if (!winner || !loser || winner.category === loser.category) continue;
 
     if (EXPECTED_RANK[winner.category] < EXPECTED_RANK[loser.category]) {
-      surprisingWins.set(winner.category, (surprisingWins.get(winner.category) ?? 0) + 1);
+      const key = `${winner.category}__${loser.category}`;
+      const existing = surprisingPairs.get(key);
+      surprisingPairs.set(key, { winner: winner.category, loser: loser.category, count: (existing?.count ?? 0) + 1 });
     }
   }
 
-  let surprisingCategory: { category: EntityCategory; count: number } | null = null;
-  for (const [cat, count] of surprisingWins) {
-    if (!surprisingCategory || count > surprisingCategory.count) {
-      surprisingCategory = { category: cat, count };
+  let surprisingCategory: { winner: EntityCategory; loser: EntityCategory; count: number } | null = null;
+  for (const pair of surprisingPairs.values()) {
+    if (!surprisingCategory || pair.count > surprisingCategory.count) {
+      surprisingCategory = pair;
     }
   }
 
@@ -252,10 +253,9 @@ export function CompletionDialog({ responses, entities, onKeepMatching }: Props)
 
           {surprisingCategory && (
             <StatCard emoji="📊" title="Your tendencies">
-              You rated <strong>{CATEGORY_LABELS[surprisingCategory.category]}</strong> as more
-              aware even when facing entities the crowd rates higher —{" "}
-              {surprisingCategory.count === 1 ? "once" : <><strong>{surprisingCategory.count}</strong> times</>}.
-              That's a surprising tendency.
+              You ranked <strong>{CATEGORY_LABELS[surprisingCategory.winner]}</strong> higher
+              relative to <strong>{CATEGORY_LABELS[surprisingCategory.loser]}</strong> more often
+              than the crowd does.
             </StatCard>
           )}
 

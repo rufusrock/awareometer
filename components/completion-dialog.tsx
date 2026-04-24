@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import type { ResponseRecord, Entity, EntityCategory } from "@/lib/types";
 
 type Props = {
@@ -130,12 +130,25 @@ function computeStats(responses: ResponseRecord[], entities: Entity[]) {
     biasedAgainst = null;
   }
 
-  return { mostControversial, slowest, maxMs, violations, exampleCycle, biasedFor, biasedAgainst, entityById };
+  // --- User's AI (ChatGPT) win rate ---
+  let aiAppearances = 0;
+  let aiWins = 0;
+  for (const r of nonSkips) {
+    if (r.leftId !== "chatgpt" && r.rightId !== "chatgpt") continue;
+    aiAppearances++;
+    if (r.selectedId === "chatgpt") aiWins++;
+  }
+  const userAiWinRate = aiAppearances >= 2 ? aiWins / aiAppearances : null;
+
+  return { mostControversial, slowest, maxMs, violations, exampleCycle, biasedFor, biasedAgainst, entityById, userAiWinRate };
 }
 
 export function CompletionDialog({ responses, entities, onKeepMatching }: Props) {
+  const [globalAiWinRate, setGlobalAiWinRate] = useState<number | null>(null);
+
   useEffect(() => {
     let cancelled = false;
+
     import("canvas-confetti").then(({ default: confetti }) => {
       if (cancelled) return;
       confetti({ particleCount: 120, spread: 80, origin: { y: 0.55 } });
@@ -143,10 +156,21 @@ export function CompletionDialog({ responses, entities, onKeepMatching }: Props)
         if (!cancelled) confetti({ particleCount: 60, spread: 100, origin: { y: 0.4 } });
       }, 400);
     });
+
+    fetch("/api/entity-stats?id=chatgpt")
+      .then((r) => r.json())
+      .then((data) => {
+        if (!cancelled && typeof data.winRate === "number") setGlobalAiWinRate(data.winRate);
+      })
+      .catch(() => {});
+
     return () => { cancelled = true; };
   }, []);
 
-  const { mostControversial, slowest, maxMs, violations, exampleCycle, biasedFor, biasedAgainst, entityById } = computeStats(responses, entities);
+  const { mostControversial, slowest, maxMs, violations, exampleCycle, biasedFor, biasedAgainst, entityById, userAiWinRate } = computeStats(responses, entities);
+
+  const aiGap = userAiWinRate != null && globalAiWinRate != null ? userAiWinRate - globalAiWinRate : null;
+  const showAiInsight = aiGap != null && Math.abs(aiGap) >= 0.10;
   const matchCount = responses.filter((r) => r.selectedId !== null).length;
   const skipCount = responses.filter((r) => r.selectedId === null).length;
 
@@ -171,6 +195,15 @@ export function CompletionDialog({ responses, entities, onKeepMatching }: Props)
         </div>
 
         <div className="space-y-3">
+
+          {showAiInsight && (
+            <StatCard emoji="🤖" title="Your view on AI">
+              {aiGap! > 0
+                ? <>You gave AI more credit than most — you picked ChatGPT as more aware in <strong>{Math.round(userAiWinRate! * 100)}%</strong> of its matchups, vs. the crowd average of <strong>{Math.round(globalAiWinRate! * 100)}%</strong>.</>
+                : <>You're more sceptical about AI than most — you picked ChatGPT as more aware in only <strong>{Math.round(userAiWinRate! * 100)}%</strong> of its matchups, vs. the crowd average of <strong>{Math.round(globalAiWinRate! * 100)}%</strong>.</>
+              }
+            </StatCard>
+          )}
 
           {mostControversial && (() => {
             const left = entityById.get(mostControversial.leftId);

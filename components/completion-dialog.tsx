@@ -130,21 +130,11 @@ function computeStats(responses: ResponseRecord[], entities: Entity[]) {
     biasedAgainst = null;
   }
 
-  // --- User's AI (ChatGPT) win rate ---
-  let aiAppearances = 0;
-  let aiWins = 0;
-  for (const r of nonSkips) {
-    if (r.leftId !== "chatgpt" && r.rightId !== "chatgpt") continue;
-    aiAppearances++;
-    if (r.selectedId === "chatgpt") aiWins++;
-  }
-  const userAiWinRate = aiAppearances >= 2 ? aiWins / aiAppearances : null;
-
-  return { mostControversial, slowest, maxMs, violations, exampleCycle, biasedFor, biasedAgainst, entityById, userAiWinRate };
+  return { mostControversial, slowest, maxMs, violations, exampleCycle, biasedFor, biasedAgainst, entityById };
 }
 
 export function CompletionDialog({ responses, entities, onKeepMatching }: Props) {
-  const [globalAiWinRate, setGlobalAiWinRate] = useState<number | null>(null);
+  const [entityRatings, setEntityRatings] = useState<Map<string, number> | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -157,20 +147,45 @@ export function CompletionDialog({ responses, entities, onKeepMatching }: Props)
       }, 400);
     });
 
-    fetch("/api/entity-stats?id=chatgpt")
+    fetch("/api/entity-stats")
       .then((r) => r.json())
-      .then((data) => {
-        if (!cancelled && typeof data.winRate === "number") setGlobalAiWinRate(data.winRate);
+      .then((data: { entityId: string; rating: number }[]) => {
+        if (cancelled) return;
+        const map = new Map<string, number>();
+        for (const s of data) map.set(s.entityId, s.rating);
+        setEntityRatings(map);
       })
       .catch(() => {});
 
     return () => { cancelled = true; };
   }, []);
 
-  const { mostControversial, slowest, maxMs, violations, exampleCycle, biasedFor, biasedAgainst, entityById, userAiWinRate } = computeStats(responses, entities);
+  const { mostControversial, slowest, maxMs, violations, exampleCycle, biasedFor, biasedAgainst, entityById } = computeStats(responses, entities);
 
-  const aiGap = userAiWinRate != null && globalAiWinRate != null ? userAiWinRate - globalAiWinRate : null;
-  const showAiInsight = aiGap != null && Math.abs(aiGap) >= 0.10;
+  // Elo-controlled AI insight: for each ChatGPT matchup the user judged, check
+  // whether their choice went against or with the crowd (as reflected by Elo).
+  const aiInsight: "more" | "less" | null = (() => {
+    if (!entityRatings) return null;
+    const chatGptRating = entityRatings.get("chatgpt");
+    if (chatGptRating == null) return null;
+
+    let proAI = 0;   // user picked ChatGPT over a higher-Elo opponent
+    let antiAI = 0;  // user rejected ChatGPT in favour of a lower-Elo opponent
+
+    for (const r of responses) {
+      if (!r.selectedId) continue;
+      if (r.leftId !== "chatgpt" && r.rightId !== "chatgpt") continue;
+      const opponentId = r.leftId === "chatgpt" ? r.rightId : r.leftId;
+      const opponentRating = entityRatings.get(opponentId);
+      if (opponentRating == null) continue;
+
+      if (r.selectedId === "chatgpt" && opponentRating > chatGptRating) proAI++;
+      if (r.selectedId !== "chatgpt" && opponentRating < chatGptRating) antiAI++;
+    }
+
+    if (proAI === antiAI) return null;
+    return proAI > antiAI ? "more" : "less";
+  })();
   const matchCount = responses.filter((r) => r.selectedId !== null).length;
   const skipCount = responses.filter((r) => r.selectedId === null).length;
 
@@ -196,11 +211,11 @@ export function CompletionDialog({ responses, entities, onKeepMatching }: Props)
 
         <div className="space-y-3">
 
-          {showAiInsight && (
+          {aiInsight && (
             <StatCard emoji="🤖" title="Your view on AI">
-              {aiGap! > 0
-                ? <>You think AI is more aware than most people do — you picked ChatGPT as more aware in <strong>{Math.round(userAiWinRate! * 100)}%</strong> of its matchups, vs. the crowd average of <strong>{Math.round(globalAiWinRate! * 100)}%</strong>.</>
-                : <>You think AI is less aware than most people do — you picked ChatGPT as more aware in only <strong>{Math.round(userAiWinRate! * 100)}%</strong> of its matchups, vs. the crowd average of <strong>{Math.round(globalAiWinRate! * 100)}%</strong>.</>
+              {aiInsight === "more"
+                ? "You think AI is more aware than most people do."
+                : "You think AI is less aware than most people do."
               }
             </StatCard>
           )}

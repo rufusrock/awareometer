@@ -75,6 +75,8 @@ export default function Home() {
             <p className="mt-3 text-lg text-slate-600">
               Thank you for your participation in this pilot study.
             </p>
+            <p className="mt-6 text-sm text-slate-500">Your completion code is:</p>
+            <p className="mt-1 text-2xl font-bold tracking-widest text-slate-950">CQZKJLBB</p>
             <p className="mt-8 text-sm text-slate-500">
               Think a friend would find this interesting? Send them the link:{" "}
               <a

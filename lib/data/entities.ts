@@ -78,7 +78,6 @@ export const mockEntities: Entity[] = [
   buildEntity({ id: "picasso", slug: "picasso", label: "Picasso", category: "named_humans", is_active: true }),
   buildEntity({ id: "marie-curie", slug: "marieCurie", label: "Marie Curie", category: "named_humans", is_active: true }),
   buildEntity({ id: "einstein", slug: "einstein", label: "Einstein", category: "named_humans", is_active: true }),
-  buildEntity({ id: "frida-kahlo", slug: "fridaKahlo", label: "Frida Kahlo", category: "named_humans", is_active: true }),
   buildEntity({ id: "beehive", slug: "beehive", label: "A Beehive", category: "collectives_systems", is_active: true }),
   buildEntity({ id: "virus", slug: "virus", label: "A Virus", category: "plants_fungi_microbes", is_active: true }),
   buildEntity({ id: "smartphone", slug: "smartphone", label: "A Smartphone", category: "machines_ai", is_active: true }),

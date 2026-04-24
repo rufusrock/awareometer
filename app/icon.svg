@@ -1,0 +1,30 @@
+<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="64" height="64" rx="13" fill="#0f172a"/>
+
+  <!-- Gauge track: 270° arc, lower-left (7:30) → clockwise over top → lower-right (4:30) -->
+  <!-- Arc center (32,36) radius 20. End-points: (18,50) and (46,50) -->
+  <path d="M 18 50 A 20 20 0 1 1 46 50"
+        stroke="#1e293b" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- Gauge fill: same start, sweeps ~165° clockwise up to ~1 o'clock (42,19) -->
+  <path d="M 18 50 A 20 20 0 0 1 42 19"
+        stroke="#818cf8" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- Needle: gauge center (32,36) → just past 1 o'clock, drawn behind eye -->
+  <line x1="32" y1="36" x2="40" y2="21"
+        stroke="#c7d2fe" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="32" cy="36" r="3" fill="#c7d2fe"/>
+
+  <!-- Eye (white lens, centered at 32,27) drawn over needle -->
+  <path d="M 16 27 Q 32 18 48 27 Q 32 36 16 27 Z" fill="white"/>
+
+  <!-- Iris -->
+  <circle cx="32" cy="27" r="7" fill="#818cf8"/>
+
+  <!-- Pupil -->
+  <circle cx="32" cy="27" r="3.5" fill="#0f172a"/>
+
+  <!-- Catchlight -->
+  <circle cx="35" cy="24.5" r="1.5" fill="white"/>
+</svg>

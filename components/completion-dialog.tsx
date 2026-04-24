@@ -77,10 +77,14 @@ function computeStats(responses: ResponseRecord[], entities: Entity[]) {
     wins.get(r.selectedId)!.add(loserId);
   }
   let violations = 0;
+  let exampleCycle: [string, string, string] | null = null;
   for (const [a, aBeat] of wins) {
     for (const b of aBeat) {
       for (const c of wins.get(b) ?? []) {
-        if (wins.get(c)?.has(a)) violations++;
+        if (wins.get(c)?.has(a)) {
+          violations++;
+          if (!exampleCycle) exampleCycle = [a, b, c];
+        }
       }
     }
   }
@@ -126,7 +130,7 @@ function computeStats(responses: ResponseRecord[], entities: Entity[]) {
     biasedAgainst = null;
   }
 
-  return { mostControversial, slowest, maxMs, violations, biasedFor, biasedAgainst, entityById };
+  return { mostControversial, slowest, maxMs, violations, exampleCycle, biasedFor, biasedAgainst, entityById };
 }
 
 export function CompletionDialog({ responses, entities, onKeepMatching }: Props) {
@@ -142,7 +146,7 @@ export function CompletionDialog({ responses, entities, onKeepMatching }: Props)
     return () => { cancelled = true; };
   }, []);
 
-  const { mostControversial, slowest, maxMs, violations, biasedFor, biasedAgainst, entityById } = computeStats(responses, entities);
+  const { mostControversial, slowest, maxMs, violations, exampleCycle, biasedFor, biasedAgainst, entityById } = computeStats(responses, entities);
 
   const shareUrl = typeof window !== "undefined" ? window.location.origin : "https://awareometer.up.railway.app";
 
@@ -191,8 +195,20 @@ export function CompletionDialog({ responses, entities, onKeepMatching }: Props)
 
           <StatCard emoji="🔄" title="Transitivity violations">
             {violations === 0
-              ? "Your choices were perfectly transitive — no logical contradictions!"
-              : `You had ${violations} transitivity violation${violations === 1 ? "" : "s"} (e.g. A more aware than B, B more than C, but C more than A).`}
+              ? "Your choices were perfectly consistent — no circular contradictions!"
+              : (() => {
+                  const [a, b, c] = exampleCycle!;
+                  const aL = entityById.get(a)?.label ?? a;
+                  const bL = entityById.get(b)?.label ?? b;
+                  const cL = entityById.get(c)?.label ?? c;
+                  return (
+                    <>
+                      You had <strong>{violations}</strong> circular contradiction{violations === 1 ? "" : "s"}.
+                      {" "}For example: you rated <strong>{aL}</strong> above <strong>{bL}</strong>,{" "}
+                      <strong>{bL}</strong> above <strong>{cL}</strong>, but <strong>{cL}</strong> above <strong>{aL}</strong>.
+                    </>
+                  );
+                })()}
           </StatCard>
 
           {biasedFor && biasedAgainst && biasedFor.category !== biasedAgainst.category && (

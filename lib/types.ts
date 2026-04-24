@@ -34,6 +34,9 @@ export type ResponseRecord = {
   rightId: string;
   selectedId: string | null;
   createdAt: string;
+  responseTimeMs?: number | null;
+  leftPercent?: number | null;
+  rightPercent?: number | null;
 };
 
 export type SessionState = {

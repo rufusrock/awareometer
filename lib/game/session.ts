@@ -77,14 +77,16 @@ export function createResponseRecord(session: SessionState, selectedId: string |
 export function recordResponseWithPair(
   session: SessionState,
   selectedId: string | null,
-  nextPair: SessionState["currentPair"]
+  nextPair: SessionState["currentPair"],
+  meta?: { responseTimeMs?: number | null; leftPercent?: number | null; rightPercent?: number | null }
 ): SessionState {
   const response = createResponseRecord(session, selectedId);
+  const enriched = meta ? { ...response, ...meta } : response;
   const seenPairKeys = [...session.seenPairKeys, response.pairKey];
 
   return {
     ...session,
-    responses: [...session.responses, response],
+    responses: [...session.responses, enriched],
     seenPairKeys,
     roundComparisons: session.roundComparisons + 1,
     currentPair: nextPair

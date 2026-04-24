@@ -10,7 +10,9 @@
     "fetch:commons": "node scripts/download-wikimedia-images.mjs"
   },
   "dependencies": {
+    "@types/canvas-confetti": "^1.9.0",
     "better-sqlite3": "^12.9.0",
+    "canvas-confetti": "^1.9.4",
     "next": "^15.2.8",
     "react": "19.0.0",
     "react-dom": "19.0.0"

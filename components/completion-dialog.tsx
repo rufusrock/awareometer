@@ -1,0 +1,223 @@
+"use client";
+
+import { useEffect } from "react";
+import type { ResponseRecord, Entity, EntityCategory } from "@/lib/types";
+
+type Props = {
+  responses: ResponseRecord[];
+  entities: Entity[];
+  onKeepMatching: () => void;
+};
+
+const CATEGORY_LABELS: Record<EntityCategory, string> = {
+  human_states: "humans",
+  animals: "animals",
+  plants_fungi_microbes: "plants & fungi",
+  machines_ai: "machines & AI",
+  collectives_systems: "collectives",
+  planetary_cosmic: "cosmic entities",
+  named_humans: "historical figures",
+};
+
+function formatMs(ms: number): string {
+  if (ms < 1000) return `${ms}ms`;
+  return `${(ms / 1000).toFixed(1)}s`;
+}
+
+function computeStats(responses: ResponseRecord[], entities: Entity[]) {
+  const entityById = new Map(entities.map((e) => [e.id, e]));
+  const nonSkips = responses.filter((r) => r.selectedId !== null);
+
+  // --- Most controversial pick ---
+  let mostControversial: ResponseRecord | null = null;
+  let minSpread = Infinity;
+  for (const r of nonSkips) {
+    if (r.leftPercent == null || r.rightPercent == null) continue;
+    const spread = Math.abs(r.leftPercent - r.rightPercent);
+    if (spread < minSpread) {
+      minSpread = spread;
+      mostControversial = r;
+    }
+  }
+
+  // --- Slowest decision ---
+  let slowest: ResponseRecord | null = null;
+  let maxMs = -Infinity;
+  for (const r of nonSkips) {
+    if (r.responseTimeMs != null && r.responseTimeMs > maxMs) {
+      maxMs = r.responseTimeMs;
+      slowest = r;
+    }
+  }
+
+  // --- Transitivity violations ---
+  // wins.get(A) = set of entities that A beat
+  const wins = new Map<string, Set<string>>();
+  for (const r of nonSkips) {
+    if (!r.selectedId) continue;
+    const loserId = r.selectedId === r.leftId ? r.rightId : r.leftId;
+    if (!wins.has(r.selectedId)) wins.set(r.selectedId, new Set());
+    wins.get(r.selectedId)!.add(loserId);
+  }
+  let violations = 0;
+  for (const [a, aBeat] of wins) {
+    for (const b of aBeat) {
+      for (const c of wins.get(b) ?? []) {
+        if (wins.get(c)?.has(a)) violations++;
+      }
+    }
+  }
+  violations = Math.round(violations / 3);
+
+  // --- Category bias ---
+  // For each non-skip response, tally appearances and wins per category
+  const catAppearances = new Map<EntityCategory, number>();
+  const catWins = new Map<EntityCategory, number>();
+
+  for (const r of nonSkips) {
+    if (!r.selectedId) continue;
+    const loserId = r.selectedId === r.leftId ? r.rightId : r.leftId;
+    const winner = entityById.get(r.selectedId);
+    const loser = entityById.get(loserId);
+    if (!winner || !loser) continue;
+
+    catAppearances.set(winner.category, (catAppearances.get(winner.category) ?? 0) + 1);
+    catAppearances.set(loser.category, (catAppearances.get(loser.category) ?? 0) + 1);
+    catWins.set(winner.category, (catWins.get(winner.category) ?? 0) + 1);
+  }
+
+  let biasedFor: { category: EntityCategory; winRate: number } | null = null;
+  let biasedAgainst: { category: EntityCategory; winRate: number } | null = null;
+
+  for (const [cat, appearances] of catAppearances) {
+    if (appearances < 3) continue;
+    const wins = catWins.get(cat) ?? 0;
+    const winRate = wins / appearances;
+    if (!biasedFor || winRate > biasedFor.winRate) biasedFor = { category: cat, winRate };
+    if (!biasedAgainst || winRate < biasedAgainst.winRate) biasedAgainst = { category: cat, winRate };
+  }
+
+  return { mostControversial, slowest, maxMs, violations, biasedFor, biasedAgainst, entityById };
+}
+
+export function CompletionDialog({ responses, entities, onKeepMatching }: Props) {
+  useEffect(() => {
+    let cancelled = false;
+    import("canvas-confetti").then(({ default: confetti }) => {
+      if (cancelled) return;
+      confetti({ particleCount: 120, spread: 80, origin: { y: 0.55 } });
+      setTimeout(() => {
+        if (!cancelled) confetti({ particleCount: 60, spread: 100, origin: { y: 0.4 } });
+      }, 400);
+    });
+    return () => { cancelled = true; };
+  }, []);
+
+  const { mostControversial, slowest, maxMs, violations, biasedFor, biasedAgainst, entityById } = computeStats(responses, entities);
+
+  const shareUrl = typeof window !== "undefined" ? window.location.origin : "https://awareometer.up.railway.app";
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 px-4 backdrop-blur-sm">
+      <div className="glass-panel w-full max-w-lg animate-rise rounded-[2rem] px-6 py-8 shadow-card">
+
+        <div className="mb-6 text-center">
+          <div className="mb-2 text-4xl">🎉</div>
+          <h2 className="text-2xl font-semibold tracking-tight text-slate-950 sm:text-3xl">
+            25 comparisons done!
+          </h2>
+          <p className="mt-2 text-sm text-slate-500">
+            Here's what your choices reveal…
+          </p>
+        </div>
+
+        <div className="space-y-3">
+
+          {mostControversial && (() => {
+            const left = entityById.get(mostControversial.leftId);
+            const right = entityById.get(mostControversial.rightId);
+            const winner = entityById.get(mostControversial.selectedId!);
+            const split = mostControversial.leftPercent != null
+              ? `${Math.round(mostControversial.leftPercent)}/${Math.round(mostControversial.rightPercent!)}% split`
+              : "a near-even split";
+            return (
+              <StatCard emoji="⚖️" title="Most controversial pick">
+                You chose <strong>{winner?.label}</strong> over{" "}
+                <strong>{winner?.id === left?.id ? right?.label : left?.label}</strong>,
+                but the crowd was almost evenly divided ({split}).
+              </StatCard>
+            );
+          })()}
+
+          {slowest && (() => {
+            const left = entityById.get(slowest.leftId);
+            const right = entityById.get(slowest.rightId);
+            return (
+              <StatCard emoji="🤔" title="Hardest decision">
+                You spent <strong>{formatMs(maxMs)}</strong> deciding between{" "}
+                <strong>{left?.label}</strong> and <strong>{right?.label}</strong>.
+              </StatCard>
+            );
+          })()}
+
+          <StatCard emoji="🔄" title="Transitivity violations">
+            {violations === 0
+              ? "Your choices were perfectly transitive — no logical contradictions!"
+              : `You had ${violations} transitivity violation${violations === 1 ? "" : "s"} (e.g. A more aware than B, B more than C, but C more than A).`}
+          </StatCard>
+
+          {biasedFor && biasedAgainst && biasedFor.category !== biasedAgainst.category && (
+            <StatCard emoji="📊" title="Your tendencies">
+              You rated <strong>{CATEGORY_LABELS[biasedFor.category]}</strong> as more aware{" "}
+              {Math.round(biasedFor.winRate * 100)}% of the time when they appeared, compared to{" "}
+              <strong>{CATEGORY_LABELS[biasedAgainst.category]}</strong> at just{" "}
+              {Math.round(biasedAgainst.winRate * 100)}%.
+            </StatCard>
+          )}
+
+        </div>
+
+        <div className="mt-6 space-y-3">
+          <div className="text-center">
+            <p className="mb-2 text-xs text-slate-500">Know someone who'd find this interesting?</p>
+            <button
+              type="button"
+              onClick={() => {
+                if (navigator.share) {
+                  navigator.share({ title: "Aware-o-meter", url: shareUrl });
+                } else {
+                  navigator.clipboard.writeText(shareUrl);
+                }
+              }}
+              className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-5 py-2 text-sm font-semibold text-white transition hover:bg-slate-700"
+            >
+              Share Aware-o-meter
+            </button>
+          </div>
+
+          <div className="text-center">
+            <button
+              type="button"
+              onClick={onKeepMatching}
+              className="text-sm text-slate-400 underline decoration-slate-300 underline-offset-4 transition hover:text-slate-600"
+            >
+              Keep matching →
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
+function StatCard({ emoji, title, children }: { emoji: string; title: string; children: React.ReactNode }) {
+  return (
+    <div className="rounded-2xl bg-white/60 px-4 py-3 shadow-sm">
+      <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-400">
+        {emoji} {title}
+      </p>
+      <p className="text-sm leading-relaxed text-slate-700">{children}</p>
+    </div>
+  );
+}

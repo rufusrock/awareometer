@@ -12,7 +12,7 @@ type PairStats = {
 type ComparisonStageProps = {
   pair: EntityPair;
   visitorId: string;
-  onChoose: (winnerId: string, openedModal: boolean) => void;
+  onChoose: (winnerId: string, openedModal: boolean, responseTimeMs: number, leftPercent: number | null, rightPercent: number | null) => void;
   onSkip: (openedModal: boolean) => void;
   onInteract: () => void;
 };
@@ -24,6 +24,7 @@ export function ComparisonStage({ pair, visitorId, onChoose, onSkip, onInteract 
   const [modalWasOpened, setModalWasOpened] = useState(false);
   const timeoutRef = useRef<number | null>(null);
   const startTimeRef = useRef<number>(Date.now());
+  const statsRef = useRef<PairStats | null>(null);
 
   useEffect(() => {
     return () => {
@@ -57,13 +58,17 @@ export function ComparisonStage({ pair, visitorId, onChoose, onSkip, onInteract 
       if (res.ok) {
         const data: PairStats = await res.json();
         setStats(data);
+        statsRef.current = data;
       }
     } catch {
       // API unavailable — continue without percentages
     }
 
     timeoutRef.current = window.setTimeout(() => {
-      onChoose(winnerId, modalWasOpened);
+      const s = statsRef.current;
+      const leftPct = s && s.totalCount > 0 ? (s.leftCount / s.totalCount) * 100 : null;
+      const rightPct = s && s.totalCount > 0 ? (s.rightCount / s.totalCount) * 100 : null;
+      onChoose(winnerId, modalWasOpened, responseTimeMs, leftPct, rightPct);
     }, 1350);
   };
 

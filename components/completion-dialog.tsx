@@ -349,6 +349,15 @@ function StatCard({
     });
   };
 
+  const handleShare = () => {
+    if (!shareText) return;
+    if (navigator.share) {
+      navigator.share({ text: shareText });
+    } else {
+      handleCopy();
+    }
+  };
+
   return (
     <div className="rounded-2xl bg-white/60 px-4 py-3 shadow-sm">
       <div className="mb-1 flex items-center justify-between gap-2">
@@ -356,13 +365,25 @@ function StatCard({
           {emoji} {title}
         </p>
         {shareText && (
-          <button
-            type="button"
-            onClick={handleCopy}
-            className="shrink-0 text-xs text-slate-400 transition hover:text-slate-600"
-          >
-            {copied ? "✓ Copied" : "Copy"}
-          </button>
+          <div className="flex shrink-0 items-center gap-2">
+            <button
+              type="button"
+              onClick={handleCopy}
+              className="text-xs text-slate-400 transition hover:text-slate-600"
+            >
+              {copied ? "✓ Copied" : "Copy"}
+            </button>
+            <button
+              type="button"
+              onClick={handleShare}
+              aria-label="Share"
+              className="text-slate-400 transition hover:text-slate-600"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-3.5 w-3.5">
+                <path d="M13 4.5a2.5 2.5 0 1 1 .702 1.737L6.97 9.604a2.518 2.518 0 0 1 0 .792l6.733 3.367a2.5 2.5 0 1 1-.671 1.341l-6.733-3.367a2.5 2.5 0 1 1 0-3.474l6.733-3.366A2.52 2.52 0 0 1 13 4.5Z" />
+              </svg>
+            </button>
+          </div>
         )}
       </div>
       <p className="text-sm leading-relaxed text-slate-700">{children}</p>

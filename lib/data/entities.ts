@@ -12,7 +12,8 @@ const customPhotoPaths: Record<string, string> = {
   "you-under-anesthesia": "/images/entities-photo/you-under-anesthesia.jpg",
   "humanoid-robot": "/images/entities-photo/humanoid-robot.webp",
   "meditating-monk": "/images/entities-photo/meditating-monk.webp",
-  "salmon": "/images/entities-photo/salmon.webp"
+  "salmon": "/images/entities-photo/salmon.webp",
+  "einstein": "/images/entities-photo/einstein.webp"
 };
 
 function buildEntity(entity: Omit<Entity, "image_url" | "image_alt" | "image_source" | "image_credit" | "image_style">): Entity {
@@ -76,6 +77,7 @@ export const mockEntities: Entity[] = [
   buildEntity({ id: "self-driving-car", slug: "selfDrivingCar", label: "A Self-Driving Car", category: "machines_ai", is_active: true }),
   buildEntity({ id: "picasso", slug: "picasso", label: "Picasso", category: "named_humans", is_active: true }),
   buildEntity({ id: "marie-curie", slug: "marieCurie", label: "Marie Curie", category: "named_humans", is_active: true }),
+  buildEntity({ id: "einstein", slug: "einstein", label: "Einstein", category: "named_humans", is_active: true }),
   buildEntity({ id: "beehive", slug: "beehive", label: "A Beehive", category: "collectives_systems", is_active: true }),
   buildEntity({ id: "virus", slug: "virus", label: "A Virus", category: "plants_fungi_microbes", is_active: true }),
   buildEntity({ id: "smartphone", slug: "smartphone", label: "A Smartphone", category: "machines_ai", is_active: true }),

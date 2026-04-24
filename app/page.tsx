@@ -61,37 +61,6 @@ export default function Home() {
     return <main className="min-h-screen" />;
   }
 
-  const completedCount = session.responses.length;
-  const isComplete = completedCount >= 25;
-
-  if (isComplete) {
-    return (
-      <main className="min-h-screen px-4 py-6 sm:px-6 sm:py-10">
-        <div className="mx-auto flex min-h-screen w-full max-w-6xl flex-col items-center justify-center gap-6 text-center">
-          <div className="glass-panel rounded-[2rem] px-8 py-12 shadow-card max-w-xl">
-            <p className="text-2xl font-semibold tracking-tight text-slate-950 sm:text-3xl">
-              You have completed 25 questions!
-            </p>
-            <p className="mt-3 text-lg text-slate-600">
-              Thank you for your participation in this pilot study.
-            </p>
-            <p className="mt-6 text-sm text-slate-500">Your completion code is:</p>
-            <p className="mt-1 text-2xl font-bold tracking-widest text-slate-950">CQZKJLBB</p>
-            <p className="mt-8 text-sm text-slate-500">
-              Think a friend would find this interesting? Send them the link:{" "}
-              <a
-                href="https://awareometer.up.railway.app/"
-                className="font-medium text-slate-700 underline decoration-slate-300 underline-offset-4"
-              >
-                awareometer.up.railway.app
-              </a>
-            </p>
-          </div>
-        </div>
-      </main>
-    );
-  }
-
   return (
     <main className="min-h-screen px-4 py-6 sm:px-6 sm:py-10">
       <div className="mx-auto flex min-h-screen w-full max-w-6xl flex-col justify-between gap-8">

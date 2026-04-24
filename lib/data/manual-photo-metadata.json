@@ -90,6 +90,15 @@
     "usageTerms": "Attribution pending documentation"
   },
   {
+    "slug": "einstein",
+    "localImagePath": "/images/entities-photo/einstein.webp",
+    "sourcePageUrl": null,
+    "directFileUrl": null,
+    "license": "Attribution pending documentation",
+    "attribution": "Attribution pending documentation",
+    "usageTerms": "Attribution pending documentation"
+  },
+  {
     "slug": "elephant",
     "localImagePath": "/images/entities-photo/elephant.jpg",
     "sourcePageUrl": null,

@@ -47,7 +47,10 @@ const labels: Record<string, string> = {
   "coral-reef": "A Coral Reef",
   "earth": "The Earth",
   "universe": "The Universe",
-  "rock": "A Rock"
+  "rock": "A Rock",
+  "picasso": "Picasso",
+  "marie-curie": "Marie Curie",
+  "einstein": "Einstein"
 };
 
 export const entityAssetManifest: EntityAssetRecord[] = Object.entries(labels).map(([slug, label]) => {

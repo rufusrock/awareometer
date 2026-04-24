@@ -82,6 +82,9 @@ export function selectNextPair(ctx: SelectionContext): { leftId: string; rightId
       const rightId = entityIds[j];
       const pairKey = canonicalPairKey(leftId, rightId);
 
+      // Never show the same pair twice to the same visitor
+      if (ctx.visitorSeenPairs.has(pairKey)) continue;
+
       const score = isBootstrap
         ? scoreBootstrapPair(leftId, rightId, pairKey, ctx)
         : scoreAdaptivePair(leftId, rightId, pairKey, ctx);
@@ -207,10 +210,7 @@ function underexposureScore(
   const pairCount = pairExp ? pairExp.exposureCount : 0;
   const pairUnderexposure = 1 - Math.min(pairCount / SELECTION_CONFIG.maxExposureNorm, 1);
 
-  // Bonus for pairs this visitor hasn't seen
-  const unseenBonus = ctx.visitorSeenPairs.has(pairKey) ? 0 : 0.2;
-
-  return (entityUnderexposure + pairUnderexposure) / 2 + unseenBonus;
+  return (entityUnderexposure + pairUnderexposure) / 2;
 }
 
 /**

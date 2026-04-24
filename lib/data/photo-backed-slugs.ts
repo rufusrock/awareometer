@@ -20,6 +20,7 @@ export const photoBackedEntityIds = [
   "dolphin",
   "earth",
   "ecosystem",
+  "einstein",
   "elephant",
   "humanoid-robot",
   "internet",

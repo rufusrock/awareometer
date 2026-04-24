@@ -20,10 +20,6 @@ export const RATING_CONFIG = {
   uncertaintyFloor: 50,
   /** Uncertainty decay rate per appearance (simple monotone shrink) */
   uncertaintyDecayRate: 0.97,
-  /** Comparisons per visitor before their Elo weight starts fading */
-  visitorWeightThreshold: 100,
-  /** Minimum Elo weight for very high-volume visitors */
-  visitorWeightFloor: 0.1,
 } as const;
 
 // ── Types ──────────────────────────────────────────────────────────────────
@@ -61,13 +57,20 @@ export function expectedScore(ratingA: number, ratingB: number): number {
  * actualScoreA: 1 for win, 0 for loss, 0.5 for tie
  */
 /**
- * Returns a weight in (0, 1] to scale the K-factor for a given visitor.
- * Full weight up to the threshold; decays as threshold/count beyond it.
+ * Returns a weight in [0, 1] to scale the K-factor for a given visitor.
+ * Steps down in bands of 100 comparisons:
+ *   0–100:   1.0  (full weight)
+ *   101–200: 0.5
+ *   201–300: 0.25
+ *   301–400: 0.1
+ *   401+:    0    (no impact)
  */
 export function visitorWeight(visitorComparisonCount: number): number {
-  const { visitorWeightThreshold, visitorWeightFloor } = RATING_CONFIG;
-  if (visitorComparisonCount <= visitorWeightThreshold) return 1;
-  return Math.max(visitorWeightFloor, visitorWeightThreshold / visitorComparisonCount);
+  if (visitorComparisonCount <= 100) return 1;
+  if (visitorComparisonCount <= 200) return 0.5;
+  if (visitorComparisonCount <= 300) return 0.25;
+  if (visitorComparisonCount <= 400) return 0.1;
+  return 0;
 }
 
 export function updateRatings(

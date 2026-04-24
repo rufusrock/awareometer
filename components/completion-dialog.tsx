@@ -19,6 +19,18 @@ const CATEGORY_LABELS: Record<EntityCategory, string> = {
   named_humans: "historical figures",
 };
 
+// Higher = most people expect this category to be more aware.
+// Used to detect when a user's tendencies are genuinely surprising.
+const EXPECTED_RANK: Record<EntityCategory, number> = {
+  named_humans: 6,
+  human_states: 5,
+  animals: 4,
+  machines_ai: 3,
+  plants_fungi_microbes: 2,
+  collectives_systems: 2,
+  planetary_cosmic: 1,
+};
+
 function formatMs(ms: number): string {
   if (ms < 1000) return `${ms}ms`;
   return `${(ms / 1000).toFixed(1)}s`;
@@ -29,16 +41,21 @@ function computeStats(responses: ResponseRecord[], entities: Entity[]) {
   const nonSkips = responses.filter((r) => r.selectedId !== null);
 
   // --- Most controversial pick ---
+  // Find the response where the user most strongly went against the crowd,
+  // i.e. chose the entity with the lowest crowd percentage.
   let mostControversial: ResponseRecord | null = null;
-  let minSpread = Infinity;
+  let maxContraScore = -Infinity;
   for (const r of nonSkips) {
-    if (r.leftPercent == null || r.rightPercent == null) continue;
-    const spread = Math.abs(r.leftPercent - r.rightPercent);
-    if (spread < minSpread) {
-      minSpread = spread;
+    if (r.leftPercent == null || r.rightPercent == null || !r.selectedId) continue;
+    const winnerPct = r.selectedId === r.leftId ? r.leftPercent : r.rightPercent;
+    const contraScore = 50 - winnerPct; // positive = went against majority
+    if (contraScore > maxContraScore) {
+      maxContraScore = contraScore;
       mostControversial = r;
     }
   }
+  // Only surface if the user actually picked the underdog at least once
+  if (maxContraScore <= 0) mostControversial = null;
 
   // --- Slowest decision ---
   let slowest: ResponseRecord | null = null;
@@ -91,10 +108,22 @@ function computeStats(responses: ResponseRecord[], entities: Entity[]) {
 
   for (const [cat, appearances] of catAppearances) {
     if (appearances < 3) continue;
-    const wins = catWins.get(cat) ?? 0;
-    const winRate = wins / appearances;
+    const w = catWins.get(cat) ?? 0;
+    const winRate = w / appearances;
     if (!biasedFor || winRate > biasedFor.winRate) biasedFor = { category: cat, winRate };
     if (!biasedAgainst || winRate < biasedAgainst.winRate) biasedAgainst = { category: cat, winRate };
+  }
+
+  // Only surface if the result is surprising:
+  // biasedFor (high win rate) should have a LOWER expected rank than biasedAgainst (low win rate).
+  // If the "obvious" higher-ranked category wins most, that's not interesting.
+  if (
+    biasedFor &&
+    biasedAgainst &&
+    EXPECTED_RANK[biasedFor.category] >= EXPECTED_RANK[biasedAgainst.category]
+  ) {
+    biasedFor = null;
+    biasedAgainst = null;
   }
 
   return { mostControversial, slowest, maxMs, violations, biasedFor, biasedAgainst, entityById };
@@ -137,14 +166,14 @@ export function CompletionDialog({ responses, entities, onKeepMatching }: Props)
             const left = entityById.get(mostControversial.leftId);
             const right = entityById.get(mostControversial.rightId);
             const winner = entityById.get(mostControversial.selectedId!);
-            const split = mostControversial.leftPercent != null
-              ? `${Math.round(mostControversial.leftPercent)}/${Math.round(mostControversial.rightPercent!)}% split`
-              : "a near-even split";
+            const winnerPct = mostControversial.selectedId === mostControversial.leftId
+              ? mostControversial.leftPercent
+              : mostControversial.rightPercent;
+            const loserLabel = winner?.id === left?.id ? right?.label : left?.label;
             return (
-              <StatCard emoji="⚖️" title="Most controversial pick">
-                You chose <strong>{winner?.label}</strong> over{" "}
-                <strong>{winner?.id === left?.id ? right?.label : left?.label}</strong>,
-                but the crowd was almost evenly divided ({split}).
+              <StatCard emoji="⚖️" title="Most contrarian pick">
+                You chose <strong>{winner?.label}</strong> over <strong>{loserLabel}</strong>,
+                but only {Math.round(winnerPct ?? 0)}% of participants agreed with you.
               </StatCard>
             );
           })()}
@@ -168,10 +197,10 @@ export function CompletionDialog({ responses, entities, onKeepMatching }: Props)
 
           {biasedFor && biasedAgainst && biasedFor.category !== biasedAgainst.category && (
             <StatCard emoji="📊" title="Your tendencies">
-              You rated <strong>{CATEGORY_LABELS[biasedFor.category]}</strong> as more aware{" "}
-              {Math.round(biasedFor.winRate * 100)}% of the time when they appeared, compared to{" "}
-              <strong>{CATEGORY_LABELS[biasedAgainst.category]}</strong> at just{" "}
-              {Math.round(biasedAgainst.winRate * 100)}%.
+              When <strong>{CATEGORY_LABELS[biasedFor.category]}</strong> appeared in a pair you
+              picked them {Math.round(biasedFor.winRate * 100)}% of the time — yet{" "}
+              <strong>{CATEGORY_LABELS[biasedAgainst.category]}</strong> only won{" "}
+              {Math.round(biasedAgainst.winRate * 100)}% of the time. That's a surprising gap.
             </StatCard>
           )}
 

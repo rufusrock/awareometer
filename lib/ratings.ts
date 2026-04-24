@@ -20,6 +20,10 @@ export const RATING_CONFIG = {
   uncertaintyFloor: 50,
   /** Uncertainty decay rate per appearance (simple monotone shrink) */
   uncertaintyDecayRate: 0.97,
+  /** Comparisons per visitor before their Elo weight starts fading */
+  visitorWeightThreshold: 100,
+  /** Minimum Elo weight for very high-volume visitors */
+  visitorWeightFloor: 0.1,
 } as const;
 
 // ── Types ──────────────────────────────────────────────────────────────────
@@ -56,12 +60,23 @@ export function expectedScore(ratingA: number, ratingB: number): number {
  *
  * actualScoreA: 1 for win, 0 for loss, 0.5 for tie
  */
+/**
+ * Returns a weight in (0, 1] to scale the K-factor for a given visitor.
+ * Full weight up to the threshold; decays as threshold/count beyond it.
+ */
+export function visitorWeight(visitorComparisonCount: number): number {
+  const { visitorWeightThreshold, visitorWeightFloor } = RATING_CONFIG;
+  if (visitorComparisonCount <= visitorWeightThreshold) return 1;
+  return Math.max(visitorWeightFloor, visitorWeightThreshold / visitorComparisonCount);
+}
+
 export function updateRatings(
   entityA: EntityStats,
   entityB: EntityStats,
-  actualScoreA: number
+  actualScoreA: number,
+  weight: number = 1
 ): { updatedA: EntityStats; updatedB: EntityStats } {
-  const K = RATING_CONFIG.kFactor;
+  const K = RATING_CONFIG.kFactor * weight;
   const eA = expectedScore(entityA.rating, entityB.rating);
   const eB = 1 - eA;
   const actualScoreB = 1 - actualScoreA;
@@ -98,9 +113,10 @@ export function updateRatings(
  */
 export function processWin(
   winner: EntityStats,
-  loser: EntityStats
+  loser: EntityStats,
+  weight: number = 1
 ): { updatedA: EntityStats; updatedB: EntityStats } {
-  return updateRatings(winner, loser, 1);
+  return updateRatings(winner, loser, 1, weight);
 }
 
 /**

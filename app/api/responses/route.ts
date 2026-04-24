@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { getEntityStats, getPairStats, recordComparisonAtomic } from "@/lib/db";
-import { processWin } from "@/lib/ratings";
+import { getEntityStats, getPairStats, recordComparisonAtomic, getVisitorCompletedCount } from "@/lib/db";
+import { processWin, visitorWeight } from "@/lib/ratings";
 
 export async function POST(request: Request) {
   const body = await request.json();
@@ -24,9 +24,10 @@ export async function POST(request: Request) {
   const winnerId = selectedId;
   const loserId = winnerId === leftId ? rightId : leftId;
 
+  const weight = visitorWeight(getVisitorCompletedCount(visitorId));
   const winnerStats = getEntityStats(winnerId);
   const loserStats = getEntityStats(loserId);
-  const { updatedA: updatedWinner, updatedB: updatedLoser } = processWin(winnerStats, loserStats);
+  const { updatedA: updatedWinner, updatedB: updatedLoser } = processWin(winnerStats, loserStats, weight);
 
   recordComparisonAtomic(
     visitorId,

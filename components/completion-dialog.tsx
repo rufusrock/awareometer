@@ -147,6 +147,8 @@ export function CompletionDialog({ responses, entities, onKeepMatching }: Props)
   }, []);
 
   const { mostControversial, slowest, maxMs, violations, exampleCycle, biasedFor, biasedAgainst, entityById } = computeStats(responses, entities);
+  const matchCount = responses.filter((r) => r.selectedId !== null).length;
+  const skipCount = responses.filter((r) => r.selectedId === null).length;
 
   const shareUrl = typeof window !== "undefined" ? window.location.origin : "https://awareometer.up.railway.app";
 
@@ -162,6 +164,10 @@ export function CompletionDialog({ responses, entities, onKeepMatching }: Props)
           <p className="mt-2 text-sm text-slate-500">
             Here's what your choices reveal…
           </p>
+          <div className="mt-3 flex justify-center gap-4 text-xs text-slate-400">
+            <span><strong className="text-slate-600">{matchCount}</strong> matches</span>
+            <span><strong className="text-slate-600">{skipCount}</strong> skips</span>
+          </div>
         </div>
 
         <div className="space-y-3">
@@ -204,7 +210,7 @@ export function CompletionDialog({ responses, entities, onKeepMatching }: Props)
                   return (
                     <>
                       You had <strong>{violations}</strong> circular contradiction{violations === 1 ? "" : "s"}.
-                      {" "}For example: you rated <strong>{aL}</strong> above <strong>{bL}</strong>,{" "}
+                      {" "}You rated <strong>{aL}</strong> above <strong>{bL}</strong>,{" "}
                       <strong>{bL}</strong> above <strong>{cL}</strong>, but <strong>{cL}</strong> above <strong>{aL}</strong>.
                     </>
                   );

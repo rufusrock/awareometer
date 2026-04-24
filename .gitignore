@@ -5,3 +5,5 @@ node_modules/
 *.db-wal
 tsconfig.tsbuildinfo
 .claude/
+export-*.json
+debug.json

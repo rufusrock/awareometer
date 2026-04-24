@@ -286,8 +286,8 @@ export function CompletionDialog({ responses, entities, onKeepMatching }: Props)
               title="Your tendencies"
               shareText={`Apparently I rate ${CATEGORY_LABELS[surprisingCategory.winner]} as more aware than ${CATEGORY_LABELS[surprisingCategory.loser]} more often than the crowd does. ${shareUrl}`}
             >
-              You ranked <strong>{CATEGORY_LABELS[surprisingCategory.winner]}</strong> higher
-              relative to <strong>{CATEGORY_LABELS[surprisingCategory.loser]}</strong> more often
+              You ranked <strong>{CATEGORY_LABELS[surprisingCategory.winner]}</strong> as more
+              aware than <strong>{CATEGORY_LABELS[surprisingCategory.loser]}</strong> more often
               than the crowd does.
             </StatCard>
           )}

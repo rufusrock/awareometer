@@ -85,6 +85,9 @@ export function selectNextPair(ctx: SelectionContext): { leftId: string; rightId
       // Never show the same pair twice to the same visitor
       if (ctx.visitorSeenPairs.has(pairKey)) continue;
 
+      // Never show "You" vs "A human" — too on the nose
+      if ((leftId === "you" && rightId === "human") || (leftId === "human" && rightId === "you")) continue;
+
       const score = isBootstrap
         ? scoreBootstrapPair(leftId, rightId, pairKey, ctx)
         : scoreAdaptivePair(leftId, rightId, pairKey, ctx);

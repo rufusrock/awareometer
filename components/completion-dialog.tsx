@@ -172,6 +172,7 @@ export function CompletionDialog({ responses, entities, onKeepMatching }: Props)
   const skipCount = responses.filter((r) => r.selectedId === null).length;
   const shareUrl = typeof window !== "undefined" ? window.location.origin : "https://awareometer.up.railway.app";
 
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 px-4 backdrop-blur-sm">
       <div className="glass-panel w-full max-w-lg animate-rise rounded-[2rem] px-6 py-8 shadow-card">
@@ -194,7 +195,6 @@ export function CompletionDialog({ responses, entities, onKeepMatching }: Props)
             <StatCard
               emoji="🤖"
               title="Your view on AI"
-              shareText={`I think AI is ${aiInsight === "more" ? "more" : "less"} aware than most people do — what's your take? ${shareUrl}`}
             >
               {aiInsight === "more"
                 ? "You think AI is more aware than most people do."
@@ -216,7 +216,6 @@ export function CompletionDialog({ responses, entities, onKeepMatching }: Props)
               <StatCard
                 emoji="⚖️"
                 title="Most contrarian pick"
-                shareText={`My most contrarian awareness take: I rated ${winner?.label} as more aware than ${loserLabel}, but only ${pct}% of people agree. ${shareUrl}`}
               >
                 You chose <strong>{winner?.label}</strong> over <strong>{loserLabel}</strong>,
                 but only {pct}% of participants agreed with you.
@@ -228,7 +227,6 @@ export function CompletionDialog({ responses, entities, onKeepMatching }: Props)
             <StatCard
               emoji="🤝"
               title="Crowd agreement"
-              shareText={`I agree with the crowd ${crowdAgreementPct}% of the time on awareness questions. What about you? ${shareUrl}`}
             >
               You voted with the majority <strong>{crowdAgreementPct}%</strong> of the time.
             </StatCard>
@@ -241,7 +239,6 @@ export function CompletionDialog({ responses, entities, onKeepMatching }: Props)
               <StatCard
                 emoji="🤔"
                 title="Hardest decision"
-                shareText={`The awareness comparison I found hardest: ${left?.label} vs ${right?.label} — I spent ${formatMs(maxMs)} deciding. ${shareUrl}`}
               >
                 You spent <strong>{formatMs(maxMs)}</strong> deciding between{" "}
                 <strong>{left?.label}</strong> and <strong>{right?.label}</strong>.
@@ -250,17 +247,8 @@ export function CompletionDialog({ responses, entities, onKeepMatching }: Props)
           })()}
 
           {(() => {
-            const shareText = violations === 0
-              ? `My awareness rankings were perfectly consistent — no circular contradictions! ${shareUrl}`
-              : (() => {
-                  const [a, b, c] = exampleCycle!;
-                  const aL = entityById.get(a)?.label ?? a;
-                  const bL = entityById.get(b)?.label ?? b;
-                  const cL = entityById.get(c)?.label ?? c;
-                  return `I had ${violations} circular contradiction${violations === 1 ? "" : "s"} in my awareness rankings — I rated ${aL} above ${bL}, ${bL} above ${cL}, but ${cL} above ${aL}. ${shareUrl}`;
-                })();
             return (
-              <StatCard emoji="🔄" title="Transitivity violations" shareText={shareText}>
+              <StatCard emoji="🔄" title="Transitivity violations">
                 {violations === 0
                   ? "Your choices were perfectly consistent — no circular contradictions!"
                   : (() => {
@@ -284,7 +272,6 @@ export function CompletionDialog({ responses, entities, onKeepMatching }: Props)
             <StatCard
               emoji="📊"
               title="Your tendencies"
-              shareText={`Apparently I rate ${CATEGORY_LABELS[surprisingCategory.winner]} as more aware than ${CATEGORY_LABELS[surprisingCategory.loser]} more often than the crowd does. ${shareUrl}`}
             >
               You ranked <strong>{CATEGORY_LABELS[surprisingCategory.winner]}</strong> as more
               aware than <strong>{CATEGORY_LABELS[surprisingCategory.loser]}</strong> more often
@@ -328,67 +315,22 @@ export function CompletionDialog({ responses, entities, onKeepMatching }: Props)
   );
 }
 
+// ── StatCard ───────────────────────────────────────────────────────────────
+
 function StatCard({
   emoji,
   title,
   children,
-  shareText,
 }: {
   emoji: string;
   title: string;
   children: React.ReactNode;
-  shareText?: string;
 }) {
-  const [copied, setCopied] = useState(false);
-  const canShare = typeof navigator !== "undefined" && !!navigator.share;
-
-  const handleCopy = () => {
-    if (!shareText) return;
-    navigator.clipboard.writeText(shareText).then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    });
-  };
-
-  const handleShare = () => {
-    if (!shareText) return;
-    if (navigator.share) {
-      navigator.share({ text: shareText });
-    } else {
-      handleCopy();
-    }
-  };
-
   return (
     <div className="rounded-2xl bg-white/60 px-4 py-3 shadow-sm">
-      <div className="mb-1 flex items-center justify-between gap-2">
-        <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
-          {emoji} {title}
-        </p>
-        {shareText && (
-          <div className="flex shrink-0 items-center gap-2">
-            <button
-              type="button"
-              onClick={handleCopy}
-              className="text-xs text-slate-400 transition hover:text-slate-600"
-            >
-              {copied ? "✓ Copied" : "Copy"}
-            </button>
-            {canShare && (
-              <button
-                type="button"
-                onClick={handleShare}
-                aria-label="Share"
-                className="text-slate-400 transition hover:text-slate-600"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-3.5 w-3.5">
-                  <path d="M13 4.5a2.5 2.5 0 1 1 .702 1.737L6.97 9.604a2.518 2.518 0 0 1 0 .792l6.733 3.367a2.5 2.5 0 1 1-.671 1.341l-6.733-3.367a2.5 2.5 0 1 1 0-3.474l6.733-3.366A2.52 2.52 0 0 1 13 4.5Z" />
-                </svg>
-              </button>
-            )}
-          </div>
-        )}
-      </div>
+      <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-400">
+        {emoji} {title}
+      </p>
       <p className="text-sm leading-relaxed text-slate-700">{children}</p>
     </div>
   );

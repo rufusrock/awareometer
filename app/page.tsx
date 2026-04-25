@@ -7,7 +7,7 @@ import { mockEntities } from "@/lib/data/entities";
 import { createInitialSession, recordResponseWithPair, fetchNextPair } from "@/lib/game/session";
 import type { SessionState } from "@/lib/types";
 
-const COMPLETION_THRESHOLD = 25;
+const COMPLETION_THRESHOLD = 15;
 
 function getOrCreateVisitorId(): string {
   const key = "awareometer-visitor-id";

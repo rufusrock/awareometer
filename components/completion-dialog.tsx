@@ -180,7 +180,7 @@ export function CompletionDialog({ responses, entities, onKeepMatching }: Props)
         <div className="mb-6 text-center">
           <div className="mb-2 text-4xl">🎉</div>
           <h2 className="text-2xl font-semibold tracking-tight text-slate-950 sm:text-3xl">
-            25 comparisons done!
+            15 comparisons done!
           </h2>
           <p className="mt-2 text-sm text-slate-500">Here's what your choices reveal…</p>
           <div className="mt-3 flex justify-center gap-4 text-xs text-slate-400">

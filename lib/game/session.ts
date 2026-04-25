@@ -1,4 +1,4 @@
-import { getOnboardingPair, getRandomPair, buildPair } from "@/lib/game/pairing";
+import { getRandomPair, buildPair } from "@/lib/game/pairing";
 import type { Entity, ResponseRecord, SessionState } from "@/lib/types";
 
 const STORAGE_KEY = "awareometer-session";
@@ -9,16 +9,7 @@ function isValidSession(value: unknown): value is SessionState {
   return Array.isArray(session.entities) && Array.isArray(session.responses) && Array.isArray(session.seenPairKeys);
 }
 
-/**
- * Fetch the next pair from the server. Falls back to local random if API is unavailable.
- * Onboarding pairs are still served client-side for the first N rounds.
- */
-export async function fetchNextPair(entities: Entity[], visitorId: string, roundComparisons: number) {
-  // Onboarding pairs are client-side (no server round-trip needed)
-  const onboardingPair = getOnboardingPair(entities, roundComparisons);
-  if (onboardingPair) return onboardingPair;
-
-  // After onboarding: server-driven adaptive pairing
+export async function fetchNextPair(entities: Entity[], visitorId: string) {
   try {
     const res = await fetch(`/api/next-pair?visitorId=${encodeURIComponent(visitorId)}`);
     if (res.ok) {
@@ -54,7 +45,7 @@ export function createInitialSession(
 
   return {
     entities,
-    currentPair: getOnboardingPair(entities, 0) ?? getRandomPair(entities),
+    currentPair: getRandomPair(entities),
     responses: [],
     seenPairKeys: [],
     roundComparisons: 0

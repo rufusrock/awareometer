@@ -1,10 +1,5 @@
 import type { Entity, EntityPair } from "@/lib/types";
 
-const ONBOARDING_PAIR_IDS: [string, string][] = [
-  ["chimpanzee", "rock"],
-  ["bee", "chatgpt"]
-];
-
 function toPairKey(leftId: string, rightId: string) {
   return [leftId, rightId].sort().join("__");
 }
@@ -16,27 +11,6 @@ export function buildPair(left: Entity, right: Entity): EntityPair {
     right
   };
 }
-
-export function getOnboardingPair(
-  entities: Entity[],
-  roundIndex: number
-): EntityPair | null {
-  if (roundIndex >= ONBOARDING_PAIR_IDS.length) {
-    return null;
-  }
-
-  const [leftId, rightId] = ONBOARDING_PAIR_IDS[roundIndex];
-  const left = entities.find((e) => e.id === leftId);
-  const right = entities.find((e) => e.id === rightId);
-
-  if (!left || !right) {
-    return null;
-  }
-
-  return buildPair(left, right);
-}
-
-export const ONBOARDING_COUNT = ONBOARDING_PAIR_IDS.length;
 
 export function getRandomPair(entities: Entity[], excludedPairKeys: string[] = []): EntityPair {
   const excluded = new Set(excludedPairKeys);

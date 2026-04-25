@@ -41,7 +41,7 @@ export default function Home() {
   const hasReachedCompletion = choiceCount >= COMPLETION_THRESHOLD;
 
   const handleInteract = () => {
-    const promise = fetchNextPair(mockEntities, visitorId, session.roundComparisons + 1);
+    const promise = fetchNextPair(mockEntities, visitorId);
     nextPairRef.current = promise;
     promise.then((pair) => {
       if (!pair) return;
@@ -57,7 +57,7 @@ export default function Home() {
     leftPercent: number | null,
     rightPercent: number | null
   ) => {
-    const nextPair = await (nextPairRef.current ?? fetchNextPair(mockEntities, visitorId, session.roundComparisons + 1));
+    const nextPair = await (nextPairRef.current ?? fetchNextPair(mockEntities, visitorId));
     nextPairRef.current = null;
     const updated = recordResponseWithPair(session, winnerId, nextPair, { responseTimeMs, leftPercent, rightPercent });
     setSession(updated);
@@ -69,7 +69,7 @@ export default function Home() {
   };
 
   const handleSkip = async () => {
-    const nextPair = await (nextPairRef.current ?? fetchNextPair(mockEntities, visitorId, session.roundComparisons + 1));
+    const nextPair = await (nextPairRef.current ?? fetchNextPair(mockEntities, visitorId));
     nextPairRef.current = null;
     const updated = recordResponseWithPair(session, null, nextPair);
     setSession(updated);

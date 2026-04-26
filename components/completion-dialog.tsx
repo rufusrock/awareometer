@@ -217,8 +217,8 @@ export function CompletionDialog({ responses, entities, onKeepMatching }: Props)
                 emoji="⚖️"
                 title="Most contrarian pick"
               >
-                You chose <strong>{winner?.label}</strong> over <strong>{loserLabel}</strong>,
-                but only {pct}% of participants agreed with you.
+                You think <strong>{winner?.label}</strong> is more aware than <strong>{loserLabel}</strong>,
+                but only {pct}% of people agree.
               </StatCard>
             );
           })()}
@@ -240,8 +240,8 @@ export function CompletionDialog({ responses, entities, onKeepMatching }: Props)
                 emoji="🤔"
                 title="Hardest decision"
               >
-                You spent <strong>{formatMs(maxMs)}</strong> deciding between{" "}
-                <strong>{left?.label}</strong> and <strong>{right?.label}</strong>.
+                You spent the longest thinking about whether <strong>{left?.label}</strong> is
+                more aware than <strong>{right?.label}</strong> — <strong>{formatMs(maxMs)}</strong>.
               </StatCard>
             );
           })()}
@@ -258,9 +258,10 @@ export function CompletionDialog({ responses, entities, onKeepMatching }: Props)
                       const cL = entityById.get(c)?.label ?? c;
                       return (
                         <>
-                          You had <strong>{violations}</strong> circular contradiction{violations === 1 ? "" : "s"}.{" "}
-                          You rated <strong>{aL}</strong> above <strong>{bL}</strong>,{" "}
-                          <strong>{bL}</strong> above <strong>{cL}</strong>, but <strong>{cL}</strong> above <strong>{aL}</strong>.
+                          Uh oh — you thought <strong>{aL}</strong> is more aware than <strong>{bL}</strong>,
+                          and <strong>{bL}</strong> more aware than <strong>{cL}</strong>,
+                          but also that <strong>{cL}</strong> is more aware than <strong>{aL}</strong>.
+                          {violations > 1 && <> ({violations} contradictions like this in total.)</>}
                         </>
                       );
                     })()}
@@ -273,9 +274,8 @@ export function CompletionDialog({ responses, entities, onKeepMatching }: Props)
               emoji="📊"
               title="Your tendencies"
             >
-              You ranked <strong>{CATEGORY_LABELS[surprisingCategory.winner]}</strong> as more
-              aware than <strong>{CATEGORY_LABELS[surprisingCategory.loser]}</strong> more often
-              than the crowd does.
+              You think <strong>{CATEGORY_LABELS[surprisingCategory.winner]}</strong> are more
+              aware than the average person does.
             </StatCard>
           )}
 

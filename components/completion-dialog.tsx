@@ -122,6 +122,7 @@ function computeStats(responses: ResponseRecord[], entities: Entity[]) {
 
 export function CompletionDialog({ responses, entities, onKeepMatching }: Props) {
   const [entityRatings, setEntityRatings] = useState<Map<string, number> | null>(null);
+  const [shareCopied, setShareCopied] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -290,12 +291,15 @@ export function CompletionDialog({ responses, entities, onKeepMatching }: Props)
                 if (navigator.share) {
                   navigator.share({ title: "Aware-o-meter", url: shareUrl });
                 } else {
-                  navigator.clipboard.writeText(shareUrl);
+                  navigator.clipboard.writeText(shareUrl).then(() => {
+                    setShareCopied(true);
+                    setTimeout(() => setShareCopied(false), 2000);
+                  });
                 }
               }}
               className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-5 py-2 text-sm font-semibold text-white transition hover:bg-slate-700"
             >
-              Share Aware-o-meter
+              {shareCopied ? "Link copied!" : "Share Aware-o-meter"}
             </button>
           </div>
 

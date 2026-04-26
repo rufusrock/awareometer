@@ -107,7 +107,7 @@ export default function Home() {
                   : "cursor-default rounded-full px-4 py-2 text-sm font-medium text-slate-300 ring-1 ring-slate-200"
               }
             >
-              How do I compare?
+              How do my intuitions compare?
             </button>
             {!hasReachedCompletion && (
               <p className="mt-1 text-xs text-slate-400">

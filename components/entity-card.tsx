@@ -40,6 +40,9 @@ export function EntityCard({ entity, isSelected = false, isDimmed = false, perce
               <span className={`text-5xl font-black tabular-nums sm:text-6xl ${isSelected ? "text-white" : "text-white/90"}`}>
                 {Math.round(percentage)}%
               </span>
+              <span className="text-xs font-medium uppercase tracking-widest text-white/70">
+                {isSelected ? "of people agree" : "chose this"}
+              </span>
             </div>
           )}
         </div>

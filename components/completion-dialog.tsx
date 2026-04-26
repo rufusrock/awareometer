@@ -274,7 +274,7 @@ export function CompletionDialog({ responses, entities, onKeepMatching }: Props)
               emoji="📊"
               title="Your tendencies"
             >
-              You think <strong>{CATEGORY_LABELS[surprisingCategory.winner]}</strong> are more
+              You think <strong>{CATEGORY_LABELS[surprisingCategory.loser]}</strong> are less
               aware than the average person does.
             </StatCard>
           )}

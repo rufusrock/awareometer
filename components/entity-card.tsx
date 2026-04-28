@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { Entity } from "@/lib/types";
 
 type EntityCardProps = {
@@ -21,12 +22,13 @@ export function EntityCard({ entity, isSelected = false, isDimmed = false, perce
       } ${isDimmed ? "opacity-70" : ""}`}
     >
       <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
-        <img
+        <Image
           src={entity.image_url}
           alt={entity.image_alt}
-          className={`h-full w-full object-cover transition duration-500 ${isSelected ? "scale-[1.02]" : "group-hover:scale-[1.03]"}`}
-          loading="eager"
-          decoding="async"
+          fill
+          sizes="(max-width: 768px) 100vw, 50vw"
+          className={`object-cover transition duration-500 ${isSelected ? "scale-[1.02]" : "group-hover:scale-[1.03]"}`}
+          priority={false}
         />
         <div
           className={`absolute inset-0 flex items-center justify-center transition duration-200 ${

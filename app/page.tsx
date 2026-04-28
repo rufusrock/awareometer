@@ -41,13 +41,7 @@ export default function Home() {
   const hasReachedCompletion = choiceCount >= COMPLETION_THRESHOLD;
 
   const handleInteract = () => {
-    const promise = fetchNextPair(mockEntities, visitorId);
-    nextPairRef.current = promise;
-    promise.then((pair) => {
-      if (!pair) return;
-      new window.Image().src = pair.left.image_url;
-      new window.Image().src = pair.right.image_url;
-    });
+    nextPairRef.current = fetchNextPair(mockEntities, visitorId);
   };
 
   const handleChoice = async (

@@ -9,9 +9,11 @@ function isValidSession(value: unknown): value is SessionState {
   return Array.isArray(session.entities) && Array.isArray(session.responses) && Array.isArray(session.seenPairKeys);
 }
 
-export async function fetchNextPair(entities: Entity[], visitorId: string) {
+export async function fetchNextPair(entities: Entity[], visitorId: string, excludePairKey?: string) {
   try {
-    const res = await fetch(`/api/next-pair?visitorId=${encodeURIComponent(visitorId)}`);
+    const params = new URLSearchParams({ visitorId });
+    if (excludePairKey) params.set("exclude", excludePairKey);
+    const res = await fetch(`/api/next-pair?${params}`);
     if (res.ok) {
       const data = await res.json();
       const left = entities.find((e) => e.id === data.leftId);

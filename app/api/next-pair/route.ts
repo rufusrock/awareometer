@@ -6,6 +6,7 @@ import { selectNextPair, type SelectionContext } from "@/lib/pair-selection";
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const visitorId = searchParams.get("visitorId");
+  const exclude = searchParams.get("exclude");
 
   if (!visitorId) {
     return NextResponse.json({ error: "Missing visitorId" }, { status: 400 });
@@ -19,6 +20,7 @@ export async function GET(request: Request) {
   const entityStatsMap = new Map(allStats.map((s) => [s.entityId, s]));
   const pairExposures = getAllPairExposures();
   const visitorSeen = new Set(getVisitorSeenPairs(visitorId));
+  if (exclude) visitorSeen.add(exclude);
   const recentPairs = new Set(getVisitorRecentPairs(visitorId, 15));
 
   const ctx: SelectionContext = {

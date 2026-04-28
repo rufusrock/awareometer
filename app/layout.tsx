@@ -10,12 +10,11 @@ export const metadata: Metadata = {
     template: "%s — Aware-o-meter",
   },
   description:
-    "A research project investigating intuitions about consciousness and awareness. Vote on which entities — animals, plants, AI, cosmic objects — you think are more aware.",
+    "A research project investigating intuitions about awareness. Vote on which entities — animals, plants, AI, cosmic objects — you think are more aware.",
   keywords: [
-    "consciousness",
     "awareness",
     "philosophy of mind",
-    "animal consciousness",
+    "animal awareness",
     "AI sentience",
     "research",
     "survey",
@@ -27,14 +26,14 @@ export const metadata: Metadata = {
     siteName: "Aware-o-meter",
     title: "Aware-o-meter — Which is more aware?",
     description:
-      "Vote on which entities are more conscious: chimps, bees, ChatGPT, coral reefs, the universe. Join the research.",
+      "Vote on which entities are more aware: chimps, bees, ChatGPT, coral reefs, the universe. Join the research.",
     locale: "en_US",
   },
   twitter: {
     card: "summary",
     title: "Aware-o-meter — Which is more aware?",
     description:
-      "Vote on which entities are more conscious: chimps, bees, ChatGPT, coral reefs, the universe. Join the research.",
+      "Vote on which entities are more aware: chimps, bees, ChatGPT, coral reefs, the universe. Join the research.",
   },
   robots: {
     index: true,
@@ -51,7 +50,7 @@ const jsonLd = {
   name: "Aware-o-meter",
   url: BASE_URL,
   description:
-    "A research project investigating intuitions about consciousness and awareness through pairwise comparisons.",
+    "A research project investigating intuitions about awareness through pairwise comparisons.",
   applicationCategory: "ResearchApplication",
   operatingSystem: "All",
   author: {

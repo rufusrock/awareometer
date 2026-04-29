@@ -66,6 +66,9 @@ function getDb(): Database.Database {
     if (!colNames.has("response_time_ms")) {
       db.exec("ALTER TABLE responses ADD COLUMN response_time_ms INTEGER");
     }
+    if (!colNames.has("referrer")) {
+      db.exec("ALTER TABLE responses ADD COLUMN referrer TEXT");
+    }
 
     // Seed entity_stats for any entities not yet present
     const insertEntityStat = db.prepare(
@@ -364,15 +367,16 @@ export function recordComparisonAtomic(
   openedModal: boolean,
   updatedWinner?: EntityStats,
   updatedLoser?: EntityStats,
-  responseTimeMs: number | null = null
+  responseTimeMs: number | null = null,
+  referrer: string | null = null
 ) {
   const database = getDb();
 
   const transaction = database.transaction(() => {
     // 1. Insert raw comparison row
     database
-      .prepare("INSERT INTO responses (visitor_id, left_id, right_id, selected_id, skipped, opened_modal, response_time_ms) VALUES (?, ?, ?, ?, ?, ?, ?)")
-      .run(visitorId, leftId, rightId, selectedId, skipped ? 1 : 0, openedModal ? 1 : 0, responseTimeMs);
+      .prepare("INSERT INTO responses (visitor_id, left_id, right_id, selected_id, skipped, opened_modal, response_time_ms, referrer) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
+      .run(visitorId, leftId, rightId, selectedId, skipped ? 1 : 0, openedModal ? 1 : 0, responseTimeMs, referrer);
 
     // 2. Update entity stats (only for non-skipped comparisons)
     if (!skipped && updatedWinner && updatedLoser) {

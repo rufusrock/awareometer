@@ -22,6 +22,7 @@ export default function Home() {
   const [isHydrated, setIsHydrated] = useState(false);
   const [session, setSession] = useState<SessionState>(() => createInitialSession(mockEntities));
   const [visitorId, setVisitorId] = useState("");
+  const [referrer, setReferrer] = useState<string | null>(null);
   const [showCompletion, setShowCompletion] = useState(false);
   const nextPairRef = useRef<ReturnType<typeof fetchNextPair> | null>(null);
 
@@ -29,6 +30,7 @@ export default function Home() {
     const restored = createInitialSession(mockEntities, true);
     setSession(restored);
     setVisitorId(getOrCreateVisitorId());
+    setReferrer(document.referrer || null);
     setIsHydrated(true);
   }, []);
 
@@ -82,6 +84,7 @@ export default function Home() {
               key={session.currentPair.key}
               pair={session.currentPair}
               visitorId={visitorId}
+              referrer={referrer}
               onChoose={handleChoice}
               onSkip={handleSkip}
               onInteract={handleInteract}

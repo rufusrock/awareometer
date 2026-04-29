@@ -4,7 +4,7 @@ import { processWin, visitorWeight } from "@/lib/ratings";
 
 export async function POST(request: Request) {
   const body = await request.json();
-  const { visitorId, leftId, rightId, selectedId, skipped, openedModal, responseTimeMs } = body;
+  const { visitorId, leftId, rightId, selectedId, skipped, openedModal, responseTimeMs, referrer } = body;
 
   if (!visitorId || !leftId || !rightId) {
     return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
@@ -14,9 +14,11 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Must provide selectedId or mark as skipped" }, { status: 400 });
   }
 
+  const ref = typeof referrer === "string" && referrer ? referrer : null;
+
   if (skipped) {
     // Skips: record raw data + pair exposure, but do NOT update Elo ratings
-    recordComparisonAtomic(visitorId, leftId, rightId, null, true, !!openedModal, undefined, undefined, responseTimeMs ?? null);
+    recordComparisonAtomic(visitorId, leftId, rightId, null, true, !!openedModal, undefined, undefined, responseTimeMs ?? null, ref);
     return NextResponse.json({ skipped: true });
   }
 
@@ -38,7 +40,8 @@ export async function POST(request: Request) {
     !!openedModal,
     updatedWinner,
     updatedLoser,
-    responseTimeMs ?? null
+    responseTimeMs ?? null,
+    ref
   );
 
   // Return crowd stats for percentage reveal

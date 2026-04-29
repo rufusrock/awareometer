@@ -12,12 +12,13 @@ type PairStats = {
 type ComparisonStageProps = {
   pair: EntityPair;
   visitorId: string;
+  referrer: string | null;
   onChoose: (winnerId: string, openedModal: boolean, responseTimeMs: number, leftPercent: number | null, rightPercent: number | null) => void;
   onSkip: (openedModal: boolean) => void;
   onInteract: () => void;
 };
 
-export function ComparisonStage({ pair, visitorId, onChoose, onSkip, onInteract }: ComparisonStageProps) {
+export function ComparisonStage({ pair, visitorId, referrer, onChoose, onSkip, onInteract }: ComparisonStageProps) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [stats, setStats] = useState<PairStats | null>(null);
   const [showModal, setShowModal] = useState(false);
@@ -51,7 +52,8 @@ export function ComparisonStage({ pair, visitorId, onChoose, onSkip, onInteract 
           rightId: pair.right.id,
           selectedId: winnerId,
           openedModal: modalWasOpened,
-          responseTimeMs
+          responseTimeMs,
+          referrer
         })
       });
 
@@ -98,7 +100,8 @@ export function ComparisonStage({ pair, visitorId, onChoose, onSkip, onInteract 
           rightId: pair.right.id,
           skipped: true,
           openedModal: true,
-          responseTimeMs
+          responseTimeMs,
+          referrer
         })
       });
     } catch {
